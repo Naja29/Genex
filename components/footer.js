@@ -28,7 +28,7 @@
         <img src="images/logo.jpg" alt="Genex" class="footer-logo">
         <p class="footer-about">Genex - Global Experience. Your trusted source for premium computer parts, electronics and accessories. Wholesale &amp; Retail with the best prices and fast service across Sri Lanka.</p>
         <div class="socials">
-          <a href="#" class="soc-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://web.facebook.com/genecoretech" target="_blank" rel="noopener" class="soc-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="soc-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
           <a href="https://wa.me/94777237962" target="_blank" class="soc-btn" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
           <a href="#" class="soc-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
@@ -70,7 +70,7 @@
           <li><i class="fas fa-phone-alt"></i><a href="tel:+94777237962">+94 77 723 7962</a></li>
           <li><i class="fab fa-whatsapp"></i><a href="https://wa.me/94777237962" target="_blank">+94 77 723 7962</a></li>
           <li><i class="fas fa-envelope"></i><a href="mailto:genecoretech@gmail.com">genecoretech@gmail.com</a></li>
-          <li><i class="fas fa-clock"></i><span>Mon – Sat: 8:00 AM – 7:00 PM</span></li>
+          <li><i class="fas fa-clock"></i><span>Mon - Sat: 8:00 AM - 7:00 PM</span></li>
         </ul>
       </div>
 
