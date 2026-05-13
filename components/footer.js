@@ -45,7 +45,7 @@
           <li><a href="brands.html">Brands</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a href="#">Return Policy</a></li>
+          <li><a href="returns.html">Return Policy</a></li>
         </ul>
       </div>
 
@@ -90,15 +90,15 @@
 
         <!-- Policy links right -->
         <nav class="footer-policy-links" aria-label="Legal">
-          <a href="#">Privacy Policy</a>
+          <a href="privacy.html">Privacy Policy</a>
           <span class="fp-div"></span>
-          <a href="#">Terms &amp; Conditions</a>
+          <a href="terms.html">Terms &amp; Conditions</a>
           <span class="fp-div"></span>
-          <a href="#">Return Policy</a>
+          <a href="returns.html">Return Policy</a>
           <span class="fp-div"></span>
-          <a href="#">Shipping Policy</a>
+          <a href="shipping.html">Shipping Policy</a>
           <span class="fp-div"></span>
-          <a href="#">FAQ</a>
+          <a href="faq.html">FAQ</a>
         </nav>
       </div>
 

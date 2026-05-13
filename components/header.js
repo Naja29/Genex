@@ -47,8 +47,8 @@
       </div>
 
       <div class="header-icons">
-        <a href="#" class="h-icon" title="Wishlist"><i class="far fa-heart"></i></a>
-        <a href="#" class="h-icon" title="My Account"><i class="far fa-user"></i></a>
+        <a href="#" class="h-icon" title="Wishlist" style="position:relative"><i class="far fa-heart"></i><span class="wish-badge" id="wishCount">0</span></a>
+        <a href="account.html" class="h-icon" title="My Account"><i class="far fa-user"></i></a>
         <a href="#" class="h-icon" title="Cart" style="position:relative">
           <i class="fas fa-shopping-cart"></i>
           <span class="cart-badge" id="cartCount">0</span>
@@ -203,6 +203,208 @@
 
   `;
 
+  // Inject cart drawer after header slot
+  const drawerHTML = `
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-head">
+    <h3><i class="fas fa-shopping-cart" style="color:var(--primary)"></i> Your Cart <span class="cart-drawer-count" id="drawerCount">0</span></h3>
+    <button class="cart-drawer-close" id="cartDrawerClose" type="button"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="cart-drawer-body" id="drawerBody"></div>
+  <div class="cart-drawer-footer" id="drawerFooter">
+    <div class="cart-drawer-total">
+      <span>Subtotal</span>
+      <strong id="drawerTotal">Rs. 0</strong>
+    </div>
+    <p class="cart-drawer-note"><i class="fas fa-truck"></i> Delivery calculated at checkout</p>
+    <a href="cart.html" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-shopping-bag"></i> View Full Cart</a>
+    <a id="drawerWaBtn" href="#" target="_blank" rel="noopener" class="btn btn-green" style="width:100%;justify-content:center"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+  </div>
+</div>`;
+  document.body.insertAdjacentHTML('beforeend', drawerHTML);
+
+  // Inject wishlist drawer
+  const wishDrawerHTML = `
+<div class="wish-overlay" id="wishOverlay"></div>
+<div class="wish-drawer" id="wishDrawer">
+  <div class="wish-drawer-head">
+    <h3><i class="fas fa-heart" style="color:#ef4444"></i> Wishlist <span class="wish-drawer-count" id="wishDrawerCount">0</span></h3>
+    <button class="wish-drawer-close" id="wishDrawerClose" type="button"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="wish-drawer-body" id="wishDrawerBody"></div>
+  <div class="wish-drawer-footer" id="wishDrawerFooter">
+    <a href="wishlist.html" class="btn btn-ghost" style="width:100%;justify-content:center"><i class="fas fa-heart"></i> View Full Wishlist</a>
+    <button id="wishMoveAllBtn" type="button" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-shopping-cart"></i> Move All to Cart</button>
+  </div>
+</div>`;
+  document.body.insertAdjacentHTML('beforeend', wishDrawerHTML);
+
+  // Wishlist drawer open/close
+  function openWishDrawer() {
+    document.getElementById('wishDrawer').classList.add('open');
+    document.getElementById('wishOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+    renderWishDrawer();
+  }
+  function closeWishDrawer() {
+    document.getElementById('wishDrawer').classList.remove('open');
+    document.getElementById('wishOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function renderWishDrawer() {
+    if (!window.GenexWishlist) return;
+    const items       = GenexWishlist.getItems();
+    const body        = document.getElementById('wishDrawerBody');
+    const footer      = document.getElementById('wishDrawerFooter');
+    const countEl     = document.getElementById('wishDrawerCount');
+
+    countEl.textContent = items.length;
+    footer.style.display = items.length ? 'flex' : 'none';
+
+    if (!items.length) {
+      body.innerHTML = `
+        <div class="wish-drawer-empty">
+          <i class="far fa-heart"></i>
+          <p>Your wishlist is empty</p>
+          <a href="shop.html" class="btn btn-primary" style="margin-top:4px"><i class="fas fa-store"></i> Browse Products</a>
+        </div>`;
+      return;
+    }
+
+    body.innerHTML = items.map(item => `
+      <div class="wish-item" data-id="${item.id}">
+        <div class="wish-item-ico"><i class="${item.icon}"></i></div>
+        <div class="wish-item-info">
+          <div class="wish-item-name" title="${item.name}">${item.name}</div>
+          <div class="wish-item-cat">${item.category}</div>
+          <div class="wish-item-price">${GenexWishlist.fmt(item.price)}</div>
+        </div>
+        <div class="wish-item-actions">
+          <button class="wish-item-cart" type="button" data-action="cart" data-id="${item.id}" title="Add to Cart"><i class="fas fa-cart-plus"></i></button>
+          <button class="wish-item-remove" type="button" data-action="remove" data-id="${item.id}" title="Remove"><i class="fas fa-trash-alt"></i></button>
+        </div>
+      </div>`).join('');
+
+    body.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = GenexWishlist.getItems().find(i => i.id === btn.dataset.id);
+        if (!item) return;
+        if (btn.dataset.action === 'cart') {
+          if (window.GenexCart) { GenexCart.addItem(item); }
+          btn.innerHTML = '<i class="fas fa-check"></i>';
+          btn.style.background = '#16a34a';
+          setTimeout(() => { btn.innerHTML = '<i class="fas fa-cart-plus"></i>'; btn.style.background = ''; }, 1400);
+        } else {
+          GenexWishlist.removeItem(item.name);
+          renderWishDrawer();
+        }
+      });
+    });
+
+    const moveAll = document.getElementById('wishMoveAllBtn');
+    if (moveAll) {
+      moveAll.onclick = () => {
+        if (!window.GenexCart) return;
+        GenexWishlist.getItems().forEach(i => GenexCart.addItem(i));
+        GenexWishlist.clear();
+        renderWishDrawer();
+      };
+    }
+  }
+
+  // Wire wishlist icon
+  document.addEventListener('click', e => {
+    const wishIcon = e.target.closest('a[title="Wishlist"]');
+    if (wishIcon) { e.preventDefault(); openWishDrawer(); }
+    if (e.target.closest('#wishOverlay') || e.target.closest('#wishDrawerClose')) closeWishDrawer();
+  });
+
+  // Cart drawer open/close
+  function openCartDrawer() {
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+    renderDrawer();
+  }
+  function closeCartDrawer() {
+    document.getElementById('cartDrawer').classList.remove('open');
+    document.getElementById('cartOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function renderDrawer() {
+    if (!window.GenexCart) return;
+    const items   = GenexCart.getItems();
+    const body    = document.getElementById('drawerBody');
+    const footer  = document.getElementById('drawerFooter');
+    const countEl = document.getElementById('drawerCount');
+    const totalEl = document.getElementById('drawerTotal');
+    const waBtn   = document.getElementById('drawerWaBtn');
+
+    countEl.textContent = GenexCart.getCount();
+    totalEl.textContent = GenexCart.fmt(GenexCart.getTotal());
+    if (waBtn) waBtn.href = GenexCart.buildWaText() || '#';
+
+    if (!items.length) {
+      footer.style.display = 'none';
+      body.innerHTML = `
+        <div class="cart-drawer-empty">
+          <i class="fas fa-shopping-cart"></i>
+          <p>Your cart is empty</p>
+          <a href="shop.html" class="btn btn-primary" style="margin-top:4px"><i class="fas fa-store"></i> Browse Products</a>
+        </div>`;
+      return;
+    }
+
+    footer.style.display = 'flex';
+    body.innerHTML = items.map(item => `
+      <div class="cart-item" data-id="${item.id}">
+        <div class="cart-item-ico"><i class="${item.icon}"></i></div>
+        <div class="cart-item-info">
+          <div class="cart-item-name" title="${item.name}">${item.name}</div>
+          <div class="cart-item-cat">${item.category}</div>
+          <div class="cart-item-row">
+            <span class="cart-item-price">${GenexCart.fmt(item.price)}</span>
+            <div class="cart-item-qty-ctrl">
+              <button type="button" data-action="dec" data-id="${item.id}"><i class="fas fa-minus"></i></button>
+              <span>${item.qty}</span>
+              <button type="button" data-action="inc" data-id="${item.id}"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+        <button class="cart-item-remove" type="button" data-action="remove" data-id="${item.id}" title="Remove"><i class="fas fa-trash-alt"></i></button>
+      </div>`).join('');
+
+    body.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const action = btn.dataset.action;
+        if (action === 'remove') GenexCart.removeItem(id);
+        else {
+          const item = GenexCart.getItems().find(i => i.id === id);
+          if (!item) return;
+          GenexCart.updateQty(id, action === 'inc' ? item.qty + 1 : item.qty - 1);
+        }
+        renderDrawer();
+      });
+    });
+  }
+
+  // Wire cart icon to open drawer
+  document.addEventListener('click', e => {
+    const cartIcon = e.target.closest('a[title="Cart"], .h-icon[title="Cart"]');
+    if (cartIcon) { e.preventDefault(); openCartDrawer(); }
+    if (e.target.closest('#cartOverlay') || e.target.closest('#cartDrawerClose')) closeCartDrawer();
+  });
+
+  // Init badges on load
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.GenexCart)     GenexCart.updateBadge();
+    if (window.GenexWishlist) GenexWishlist.updateBadge();
+  });
+
   // Set active nav link based on current page
   const page = location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link').forEach(link => {
@@ -211,6 +413,27 @@
       link.classList.add('active');
     }
   });
+
+  // Header search
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn   = document.querySelector('.header-search button');
+
+  function doSearch() {
+    const q = searchInput.value.trim();
+    if (!q) return;
+    const shopSearch = document.getElementById('shopSearch');
+    if (shopSearch) {
+      // Already on shop page - fill sidebar search and filter in place
+      shopSearch.value = q;
+      shopSearch.dispatchEvent(new Event('input'));
+      shopSearch.closest('.sf-block').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      window.location.href = 'shop.html?q=' + encodeURIComponent(q);
+    }
+  }
+
+  searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+  if (searchBtn) searchBtn.addEventListener('click', doSearch);
 
   // Pin nav to top when it scrolls out of view
   const nav  = document.getElementById('mainNav');

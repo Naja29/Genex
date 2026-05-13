@@ -177,35 +177,82 @@ function initScrollTop() {
   btn.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
-/* Cart (UI demo) */
+/* Cart */
 function initCart() {
-  let count = 0;
   document.addEventListener('click', e => {
-    if (!e.target.closest('.btn-cart')) return;
-    count++;
-    const badge = document.getElementById('cartCount');
-    if (badge) { badge.textContent = count; badge.style.transform = 'scale(1.6)'; setTimeout(() => badge.style.transform = '', 200); }
-    const btn  = e.target.closest('.btn-cart');
+    const btn = e.target.closest('.btn-cart');
+    if (!btn) return;
+    e.preventDefault();
+
+    const card = btn.closest('.product-card');
+    if (!card || !window.GenexCart) return;
+
+    GenexCart.addItem({
+      name:     card.dataset.name     || 'Product',
+      category: card.dataset.category || '',
+      price:    parseInt(card.dataset.price) || 0,
+      icon:     (card.querySelector('.product-img-placeholder i') || {}).className || 'fas fa-box'
+    });
+
+    // Button feedback
     const icon = btn.querySelector('i');
-    if (icon) { icon.className = 'fas fa-check'; btn.style.background = '#16a34a'; btn.style.color = '#fff'; btn.style.borderColor = 'transparent';
-      setTimeout(() => { icon.className = 'fas fa-shopping-cart'; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 1300);
+    if (icon) {
+      const origClass = icon.className;
+      icon.className = 'fas fa-check';
+      btn.style.background  = '#16a34a';
+      btn.style.color       = '#fff';
+      btn.style.borderColor = 'transparent';
+      setTimeout(() => {
+        icon.className    = origClass;
+        btn.style.background  = '';
+        btn.style.color       = '';
+        btn.style.borderColor = '';
+      }, 1400);
     }
   });
 }
 
-/* Wishlist hover btns */
+/* Wishlist */
 function initWishBtns() {
+  // Restore saved heart states on page load
+  function syncHearts() {
+    if (!window.GenexWishlist) return;
+    document.querySelectorAll('.p-hover-btn[title="Add to Wishlist"], .p-hover-btn[title="Wishlist"]').forEach(btn => {
+      const card = btn.closest('.product-card');
+      if (!card) return;
+      const active = GenexWishlist.has(card.dataset.name || '');
+      const icon   = btn.querySelector('i');
+      if (!icon) return;
+      icon.className      = active ? 'fas fa-heart' : 'far fa-heart';
+      btn.style.background  = active ? '#ef4444' : '';
+      btn.style.color       = active ? '#fff'    : '';
+      btn.style.borderColor = active ? 'transparent' : '';
+    });
+  }
+
   document.addEventListener('click', e => {
     const btn = e.target.closest('.p-hover-btn');
     if (!btn || !btn.title.includes('Wishlist')) return;
+    if (!window.GenexWishlist) return;
+
+    const card = btn.closest('.product-card');
+    if (!card) return;
+
+    const added = GenexWishlist.toggle({
+      name:     card.dataset.name     || 'Product',
+      category: card.dataset.category || '',
+      price:    parseInt(card.dataset.price) || 0,
+      icon:     (card.querySelector('.product-img-placeholder i') || {}).className || 'fas fa-box'
+    });
+
     const icon = btn.querySelector('i');
-    if (!icon) return;
-    const on = icon.classList.contains('fas');
-    icon.className = on ? 'far fa-heart' : 'fas fa-heart';
-    btn.style.background     = on ? '' : 'var(--gold)';
-    btn.style.color          = on ? '' : '#fff';
-    btn.style.borderColor    = on ? '' : 'transparent';
+    if (icon) icon.className = added ? 'fas fa-heart' : 'far fa-heart';
+    btn.style.background  = added ? '#ef4444'     : '';
+    btn.style.color       = added ? '#fff'         : '';
+    btn.style.borderColor = added ? 'transparent'  : '';
   });
+
+  document.addEventListener('DOMContentLoaded', syncHearts);
 }
 
 /* Newsletter */

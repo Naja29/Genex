@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account | Genex - Global Xperience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="page-loader"><div class="loader-bar"></div></div>
+
+<div id="header-slot"></div>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/wishlist.js"></script>
+<script src="components/header.js"></script>
+
+<!-- Breadcrumb -->
+<div style="background:var(--bg-2);border-bottom:1px solid var(--border);padding:12px 0">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
+      <span id="bcLabel">My Account</span>
+    </nav>
+  </div>
+</div>
+
+<!-- Page Hero -->
+<section class="page-hero" style="padding:40px 0 36px">
+  <div class="hero-dot-bg"></div>
+  <div class="page-hero-orb page-hero-orb-1"></div>
+  <div class="container page-hero-inner">
+    <div class="page-hero-text" data-anim="up">
+      <span class="section-tag" id="heroTag">My Account</span>
+      <h1 id="heroTitle">Welcome <em>Back</em></h1>
+      <p id="heroSub" style="color:var(--text-muted);font-size:14.5px">Manage your profile, wishlist and orders.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:32px">
+  <div class="container">
+
+    <!-- AUTH (guest) -->
+    <div id="authView">
+      <div class="auth-wrap">
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-tab="login">Sign In</button>
+          <button class="auth-tab" data-tab="register">Create Account</button>
+        </div>
+
+        <!-- Login -->
+        <div class="auth-panel active" id="panel-login">
+          <div class="acc-card">
+            <div class="auth-error" id="loginError"><i class="fas fa-exclamation-circle"></i><span id="loginErrMsg"></span></div>
+            <form class="auth-form" id="loginForm" novalidate>
+              <div class="cf-group">
+                <label>Email Address <span class="cf-req">*</span></label>
+                <div class="cf-input-wrap">
+                  <i class="fas fa-envelope"></i>
+                  <input type="email" id="loginEmail" placeholder="your@email.com">
+                </div>
+              </div>
+              <div class="cf-group">
+                <label>Password <span class="cf-req">*</span></label>
+                <div class="cf-input-wrap">
+                  <i class="fas fa-lock"></i>
+                  <input type="password" id="loginPassword" placeholder="Your password">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary cf-submit"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+            </form>
+            <div class="auth-divider" style="margin-top:20px">or</div>
+            <a href="https://wa.me/94777237962?text=Hi%20Genex%2C%20I%20need%20help%20with%20my%20account." target="_blank" class="btn btn-green" style="width:100%;justify-content:center;margin-top:4px">
+              <i class="fab fa-whatsapp"></i> Continue with WhatsApp
+            </a>
+            <p class="auth-footer" style="margin-top:16px">
+              No account? <a href="#" class="switch-tab" data-target="register">Create one free</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Register -->
+        <div class="auth-panel" id="panel-register">
+          <div class="acc-card">
+            <div class="auth-error" id="regError"><i class="fas fa-exclamation-circle"></i><span id="regErrMsg"></span></div>
+            <form class="auth-form" id="registerForm" novalidate>
+              <div class="cf-row">
+                <div class="cf-group">
+                  <label>First Name <span class="cf-req">*</span></label>
+                  <div class="cf-input-wrap">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="regFirstName" placeholder="First name">
+                  </div>
+                </div>
+                <div class="cf-group">
+                  <label>Last Name <span class="cf-req">*</span></label>
+                  <div class="cf-input-wrap">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="regLastName" placeholder="Last name">
+                  </div>
+                </div>
+              </div>
+              <div class="cf-group">
+                <label>Email Address <span class="cf-req">*</span></label>
+                <div class="cf-input-wrap">
+                  <i class="fas fa-envelope"></i>
+                  <input type="email" id="regEmail" placeholder="your@email.com">
+                </div>
+              </div>
+              <div class="cf-group">
+                <label>Phone Number <span class="cf-req">*</span></label>
+                <div class="cf-input-wrap">
+                  <i class="fas fa-phone-alt"></i>
+                  <input type="tel" id="regPhone" placeholder="+94 77 xxx xxxx">
+                </div>
+              </div>
+              <div class="cf-group">
+                <label>Password <span class="cf-req">*</span></label>
+                <div class="cf-input-wrap">
+                  <i class="fas fa-lock"></i>
+                  <input type="password" id="regPassword" placeholder="Minimum 6 characters">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary cf-submit"><i class="fas fa-user-plus"></i> Create Account</button>
+            </form>
+            <p class="auth-footer" style="margin-top:16px">
+              Already have an account? <a href="#" class="switch-tab" data-target="login">Sign in</a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PROFILE (logged in) -->
+    <div id="profileView" style="display:none">
+      <div class="acc-layout">
+
+        <!-- Sidebar -->
+        <div class="acc-sidebar">
+          <div class="acc-profile-card">
+            <div class="acc-avatar" id="accAvatar">JD</div>
+            <div class="acc-name" id="accName">John Doe</div>
+            <div class="acc-email" id="accEmail">john@example.com</div>
+            <span class="acc-since"><i class="fas fa-calendar-alt"></i> <span id="accSince">Member since 2025</span></span>
+          </div>
+
+          <nav class="acc-nav">
+            <div class="acc-nav-item active" data-panel="overview">
+              <i class="fas fa-th-large"></i> Overview
+            </div>
+            <div class="acc-nav-item" data-panel="profile">
+              <i class="fas fa-user-edit"></i> Edit Profile
+            </div>
+            <div class="acc-nav-item" data-panel="orders">
+              <i class="fas fa-box"></i> My Orders
+            </div>
+            <div class="acc-nav-item" data-panel="wishlist">
+              <i class="fas fa-heart"></i> Wishlist <span id="navWishCount" style="margin-left:auto;background:rgba(239,68,68,.15);color:#f87171;border-radius:20px;font-size:11px;padding:1px 8px"></span>
+            </div>
+            <div class="acc-nav-item" data-panel="security">
+              <i class="fas fa-shield-alt"></i> Security
+            </div>
+            <div class="acc-nav-item danger" id="logoutBtn">
+              <i class="fas fa-sign-out-alt"></i> Sign Out
+            </div>
+          </nav>
+        </div>
+
+        <!-- Content -->
+        <div class="acc-content">
+
+          <!-- Overview -->
+          <div class="acc-panel active" id="panel-overview">
+            <div class="acc-card">
+              <div class="acc-card-header">
+                <h3>Account Overview</h3>
+                <span style="font-size:12px;color:var(--text-dim)">Welcome back, <strong id="overviewName" style="color:var(--primary)"></strong></span>
+              </div>
+              <div class="acc-stats-grid">
+                <div class="acc-stat">
+                  <span class="acc-stat-num" id="statWish">0</span>
+                  <span class="acc-stat-label">Wishlist Items</span>
+                </div>
+                <div class="acc-stat">
+                  <span class="acc-stat-num" id="statCart">0</span>
+                  <span class="acc-stat-label">Cart Items</span>
+                </div>
+                <div class="acc-stat">
+                  <span class="acc-stat-num">0</span>
+                  <span class="acc-stat-label">Orders Placed</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="acc-card">
+              <div class="acc-card-header">
+                <h3>Quick Actions</h3>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+                <a href="shop.html" class="acc-stat" style="text-decoration:none;transition:var(--t);cursor:pointer">
+                  <span style="font-size:28px;color:var(--primary);display:block;margin-bottom:8px"><i class="fas fa-store"></i></span>
+                  <span class="acc-stat-label">Browse Shop</span>
+                </a>
+                <a href="wishlist.html" class="acc-stat" style="text-decoration:none;transition:var(--t);cursor:pointer">
+                  <span style="font-size:28px;color:#ef4444;display:block;margin-bottom:8px"><i class="fas fa-heart"></i></span>
+                  <span class="acc-stat-label">My Wishlist</span>
+                </a>
+                <a href="cart.html" class="acc-stat" style="text-decoration:none;transition:var(--t);cursor:pointer">
+                  <span style="font-size:28px;color:var(--primary);display:block;margin-bottom:8px"><i class="fas fa-shopping-cart"></i></span>
+                  <span class="acc-stat-label">View Cart</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Profile -->
+          <div class="acc-panel" id="panel-profile">
+            <div class="acc-card">
+              <div class="acc-card-header">
+                <h3>Edit Profile</h3>
+              </div>
+              <form class="auth-form" id="editProfileForm">
+                <div class="cf-row">
+                  <div class="cf-group">
+                    <label>First Name</label>
+                    <div class="cf-input-wrap"><i class="fas fa-user"></i><input type="text" id="editFirst" placeholder="First name"></div>
+                  </div>
+                  <div class="cf-group">
+                    <label>Last Name</label>
+                    <div class="cf-input-wrap"><i class="fas fa-user"></i><input type="text" id="editLast" placeholder="Last name"></div>
+                  </div>
+                </div>
+                <div class="cf-group">
+                  <label>Email Address</label>
+                  <div class="cf-input-wrap"><i class="fas fa-envelope"></i><input type="email" id="editEmail" placeholder="your@email.com"></div>
+                </div>
+                <div class="cf-group">
+                  <label>Phone Number</label>
+                  <div class="cf-input-wrap"><i class="fas fa-phone-alt"></i><input type="tel" id="editPhone" placeholder="+94 77 xxx xxxx"></div>
+                </div>
+                <div class="cf-group">
+                  <label>Delivery Address</label>
+                  <div class="cf-input-wrap cf-textarea-wrap"><i class="fas fa-map-marker-alt"></i><textarea id="editAddress" placeholder="Your delivery address" style="min-height:80px"></textarea></div>
+                </div>
+                <div class="cf-success" id="editSuccess">
+                  <i class="fas fa-check-circle"></i><span>Profile updated successfully!</span>
+                </div>
+                <button type="submit" class="btn btn-primary" style="align-self:flex-start;padding:12px 28px"><i class="fas fa-save"></i> Save Changes</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Orders -->
+          <div class="acc-panel" id="panel-orders">
+            <div class="acc-card">
+              <div class="acc-card-header">
+                <h3>My Orders</h3>
+              </div>
+              <div class="acc-orders-empty">
+                <i class="fas fa-box-open"></i>
+                <h4 style="font-size:16px;font-weight:700;color:var(--text-2)">No orders yet</h4>
+                <p>Orders placed via WhatsApp or inquiry form will be tracked here once confirmed by our team.</p>
+                <div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;justify-content:center">
+                  <a href="shop.html" class="btn btn-primary"><i class="fas fa-store"></i> Start Shopping</a>
+                  <a href="https://wa.me/94777237962" target="_blank" class="btn btn-green"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wishlist -->
+          <div class="acc-panel" id="panel-wishlist">
+            <div class="acc-card">
+              <div class="acc-card-header">
+                <h3>My Wishlist</h3>
+                <a href="wishlist.html" class="btn btn-ghost" style="padding:7px 16px;font-size:13px"><i class="fas fa-external-link-alt"></i> View Full</a>
+              </div>
+              <div id="accWishGrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px"></div>
+              <div id="accWishEmpty" class="acc-orders-empty" style="display:none">
+                <i class="far fa-heart"></i>
+                <p>No items saved to wishlist yet.</p>
+                <a href="shop.html" class="btn btn-primary" style="margin-top:4px"><i class="fas fa-store"></i> Browse Products</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Security -->
+          <div class="acc-panel" id="panel-security">
+            <div class="acc-card">
+              <div class="acc-card-header"><h3>Security</h3></div>
+              <form class="auth-form" id="changePassForm">
+                <div class="cf-group">
+                  <label>Current Password</label>
+                  <div class="cf-input-wrap"><i class="fas fa-lock"></i><input type="password" id="curPass" placeholder="Current password"></div>
+                </div>
+                <div class="cf-group">
+                  <label>New Password</label>
+                  <div class="cf-input-wrap"><i class="fas fa-lock"></i><input type="password" id="newPass" placeholder="New password (min 6 chars)"></div>
+                </div>
+                <div class="cf-group">
+                  <label>Confirm New Password</label>
+                  <div class="cf-input-wrap"><i class="fas fa-lock"></i><input type="password" id="confPass" placeholder="Confirm new password"></div>
+                </div>
+                <div class="auth-error" id="passError"><i class="fas fa-exclamation-circle"></i><span id="passErrMsg"></span></div>
+                <div class="cf-success" id="passSuccess"><i class="fas fa-check-circle"></i><span>Password updated successfully!</span></div>
+                <button type="submit" class="btn btn-primary" style="align-self:flex-start;padding:12px 28px"><i class="fas fa-key"></i> Update Password</button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer-slot"></div>
+<script src="components/footer.js"></script>
+<button class="scroll-top" id="scrollTopBtn"><i class="fas fa-chevron-up"></i></button>
+<script src="assets/js/main.js"></script>
+<script>
+(function () {
+  const UKEY = 'genex_user';
+
+  function loadUser()    { try { return JSON.parse(localStorage.getItem(UKEY)); } catch { return null; } }
+  function saveUser(u)   { localStorage.setItem(UKEY, JSON.stringify(u)); }
+  function clearUser()   { localStorage.removeItem(UKEY); }
+  function initials(u)   { return ((u.firstName||'?')[0] + (u.lastName||'?')[0]).toUpperCase(); }
+  function fullName(u)   { return (u.firstName + ' ' + u.lastName).trim(); }
+
+  // Auth tabs
+  document.querySelectorAll('.auth-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchAuthTab(tab.dataset.tab));
+  });
+  document.querySelectorAll('.switch-tab').forEach(a => {
+    a.addEventListener('click', e => { e.preventDefault(); switchAuthTab(a.dataset.target); });
+  });
+  function switchAuthTab(name) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    document.querySelectorAll('.auth-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+  }
+
+  // Login
+  document.getElementById('loginForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass  = document.getElementById('loginPassword').value;
+    const users = JSON.parse(localStorage.getItem('genex_users') || '[]');
+    const user  = users.find(u => u.email === email && u.password === pass);
+    if (!user) { showAuthError('loginError', 'loginErrMsg', 'Invalid email or password.'); return; }
+    saveUser(user);
+    showProfile(user);
+  });
+
+  // Register
+  document.getElementById('registerForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const firstName = document.getElementById('regFirstName').value.trim();
+    const lastName  = document.getElementById('regLastName').value.trim();
+    const email     = document.getElementById('regEmail').value.trim();
+    const phone     = document.getElementById('regPhone').value.trim();
+    const password  = document.getElementById('regPassword').value;
+
+    if (!firstName || !lastName || !email || !phone || !password) {
+      showAuthError('regError', 'regErrMsg', 'Please fill in all required fields.'); return;
+    }
+    if (password.length < 6) {
+      showAuthError('regError', 'regErrMsg', 'Password must be at least 6 characters.'); return;
+    }
+
+    const users = JSON.parse(localStorage.getItem('genex_users') || '[]');
+    if (users.find(u => u.email === email)) {
+      showAuthError('regError', 'regErrMsg', 'An account with this email already exists.'); return;
+    }
+
+    const user = { firstName, lastName, email, phone, password, address: '', joined: new Date().toISOString() };
+    users.push(user);
+    localStorage.setItem('genex_users', JSON.stringify(users));
+    saveUser(user);
+    showProfile(user);
+  });
+
+  function showAuthError(errId, msgId, msg) {
+    const el = document.getElementById(errId);
+    document.getElementById(msgId).textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 4000);
+  }
+
+  // Profile
+  function showProfile(user) {
+    document.getElementById('authView').style.display    = 'none';
+    document.getElementById('profileView').style.display = '';
+    document.getElementById('accAvatar').textContent   = initials(user);
+    document.getElementById('accName').textContent     = fullName(user);
+    document.getElementById('accEmail').textContent    = user.email;
+    document.getElementById('overviewName').textContent = user.firstName;
+    document.getElementById('accSince').textContent    = 'Member since ' + new Date(user.joined || Date.now()).getFullYear();
+    document.getElementById('heroTitle').innerHTML     = 'Welcome, <em>' + user.firstName + '</em>';
+    document.getElementById('heroSub').textContent     = 'Manage your profile, wishlist and orders.';
+    // Pre-fill edit form
+    document.getElementById('editFirst').value   = user.firstName || '';
+    document.getElementById('editLast').value    = user.lastName  || '';
+    document.getElementById('editEmail').value   = user.email     || '';
+    document.getElementById('editPhone').value   = user.phone     || '';
+    document.getElementById('editAddress').value = user.address   || '';
+    // Stats
+    document.getElementById('statWish').textContent    = GenexWishlist.getCount();
+    document.getElementById('statCart').textContent    = GenexCart.getCount();
+    document.getElementById('navWishCount').textContent = GenexWishlist.getCount() || '';
+    renderAccWishlist();
+  }
+
+  function renderAccWishlist() {
+    const items  = GenexWishlist.getItems();
+    const grid   = document.getElementById('accWishGrid');
+    const empty  = document.getElementById('accWishEmpty');
+    if (!items.length) { grid.style.display = 'none'; empty.style.display = ''; return; }
+    grid.style.display  = '';
+    empty.style.display = 'none';
+    grid.innerHTML = items.slice(0, 6).map(item => `
+      <div style="display:flex;align-items:center;gap:12px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--r-lg);padding:12px">
+        <div style="width:44px;height:44px;background:var(--card);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--primary);flex-shrink:0"><i class="${item.icon}"></i></div>
+        <div style="min-width:0;flex:1">
+          <div style="font-size:12px;font-weight:600;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.name}</div>
+          <div style="font-size:13px;font-weight:800;color:var(--primary);margin-top:2px">${GenexWishlist.fmt(item.price)}</div>
+        </div>
+      </div>`).join('');
+    if (items.length > 6) grid.insertAdjacentHTML('beforeend',
+      `<a href="wishlist.html" style="grid-column:span 2;text-align:center;font-size:13px;color:var(--primary);font-weight:600;padding:10px">View all ${items.length} items →</a>`);
+  }
+
+  // Nav panels
+  document.querySelectorAll('.acc-nav-item[data-panel]').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.acc-nav-item').forEach(i => i.classList.remove('active'));
+      document.querySelectorAll('.acc-panel').forEach(p => p.classList.remove('active'));
+      item.classList.add('active');
+      document.getElementById('panel-' + item.dataset.panel).classList.add('active');
+    });
+  });
+
+  // Edit profile save
+  document.getElementById('editProfileForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const user = loadUser();
+    if (!user) return;
+    user.firstName = document.getElementById('editFirst').value.trim();
+    user.lastName  = document.getElementById('editLast').value.trim();
+    user.email     = document.getElementById('editEmail').value.trim();
+    user.phone     = document.getElementById('editPhone').value.trim();
+    user.address   = document.getElementById('editAddress').value.trim();
+    // Update in users list too
+    const users = JSON.parse(localStorage.getItem('genex_users') || '[]');
+    const idx   = users.findIndex(u => u.email === loadUser().email);
+    if (idx > -1) users[idx] = user;
+    localStorage.setItem('genex_users', JSON.stringify(users));
+    saveUser(user);
+    showProfile(user);
+    document.getElementById('editSuccess').classList.add('show');
+    setTimeout(() => document.getElementById('editSuccess').classList.remove('show'), 3000);
+  });
+
+  // Change password
+  document.getElementById('changePassForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const user = loadUser();
+    const cur  = document.getElementById('curPass').value;
+    const nw   = document.getElementById('newPass').value;
+    const conf = document.getElementById('confPass').value;
+    const err  = document.getElementById('passError');
+    const msg  = document.getElementById('passErrMsg');
+
+    if (cur !== user.password)  { msg.textContent = 'Current password is incorrect.'; err.classList.add('show'); return; }
+    if (nw.length < 6)          { msg.textContent = 'New password must be at least 6 characters.'; err.classList.add('show'); return; }
+    if (nw !== conf)            { msg.textContent = 'Passwords do not match.'; err.classList.add('show'); return; }
+
+    err.classList.remove('show');
+    user.password = nw;
+    const users = JSON.parse(localStorage.getItem('genex_users') || '[]');
+    const idx   = users.findIndex(u => u.email === user.email);
+    if (idx > -1) users[idx] = user;
+    localStorage.setItem('genex_users', JSON.stringify(users));
+    saveUser(user);
+    document.getElementById('passSuccess').classList.add('show');
+    document.getElementById('changePassForm').reset();
+    setTimeout(() => document.getElementById('passSuccess').classList.remove('show'), 3000);
+  });
+
+  // Logout
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    if (confirm('Sign out of your account?')) { clearUser(); location.reload(); }
+  });
+
+  // Init
+  const saved = loadUser();
+  if (saved) showProfile(saved);
+})();
+</script>
+</body>
+</html>

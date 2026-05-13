@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist | Genex - Global Xperience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="page-loader"><div class="loader-bar"></div></div>
+
+<div id="header-slot"></div>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/wishlist.js"></script>
+<script src="components/header.js"></script>
+
+<!-- Breadcrumb -->
+<div style="background:var(--bg-2);border-bottom:1px solid var(--border);padding:12px 0">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
+      <span>Wishlist</span>
+    </nav>
+  </div>
+</div>
+
+<!-- Page Hero -->
+<section class="page-hero" style="padding:40px 0 36px">
+  <div class="hero-dot-bg"></div>
+  <div class="page-hero-orb page-hero-orb-1"></div>
+  <div class="container page-hero-inner">
+    <div class="page-hero-text" data-anim="up">
+      <span class="section-tag">Saved Items</span>
+      <h1>Your <em>Wishlist</em></h1>
+      <p id="wlHeroSub" style="color:var(--text-muted);font-size:14.5px"></p>
+    </div>
+  </div>
+</section>
+
+<!-- Wishlist Content -->
+<section class="section" style="padding-top:32px">
+  <div class="container">
+
+    <!-- Toolbar (shown when items exist) -->
+    <div id="wlToolbar" style="display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px">
+      <span id="wlCount" style="font-size:13px;color:var(--text-muted)"></span>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" id="wlMoveAllBtn" type="button"><i class="fas fa-shopping-cart"></i> Move All to Cart</button>
+        <button class="btn btn-ghost" id="wlClearBtn" type="button"><i class="fas fa-trash-alt"></i> Clear Wishlist</button>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="wishlist-page-grid" id="wlGrid"></div>
+
+    <!-- Empty state -->
+    <div id="wlEmpty" style="display:none">
+      <div class="cart-empty-state">
+        <i class="far fa-heart"></i>
+        <h3>Your wishlist is empty</h3>
+        <p>Save items you love and come back to them anytime.</p>
+        <a href="shop.html" class="btn btn-primary" style="margin-top:8px"><i class="fas fa-store"></i> Browse Products</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer-slot"></div>
+<script src="components/footer.js"></script>
+<button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
+<script src="assets/js/main.js"></script>
+<script>
+(function () {
+  function renderWishlist() {
+    const items    = GenexWishlist.getItems();
+    const grid     = document.getElementById('wlGrid');
+    const empty    = document.getElementById('wlEmpty');
+    const toolbar  = document.getElementById('wlToolbar');
+    const countEl  = document.getElementById('wlCount');
+    const heroSub  = document.getElementById('wlHeroSub');
+
+    heroSub.textContent  = items.length
+      ? items.length + ' saved item' + (items.length !== 1 ? 's' : '')
+      : 'No items saved yet.';
+    countEl.textContent  = items.length + ' item' + (items.length !== 1 ? 's' : '');
+
+    if (!items.length) {
+      grid.innerHTML      = '';
+      grid.style.display  = 'none';
+      empty.style.display = '';
+      toolbar.style.display = 'none';
+      return;
+    }
+
+    grid.style.display    = '';
+    empty.style.display   = 'none';
+    toolbar.style.display = 'flex';
+
+    grid.innerHTML = items.map(item => `
+      <div class="wl-card" data-id="${item.id}">
+        <div class="wl-card-img">
+          <i class="${item.icon}"></i>
+          <span class="wl-heart"><i class="fas fa-heart"></i></span>
+          <button class="wl-remove-btn" type="button" data-action="remove" data-name="${item.name}" title="Remove from Wishlist">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="wl-card-body">
+          <div class="wl-cat">${item.category}</div>
+          <div class="wl-name">${item.name}</div>
+          <div class="wl-pricing">
+            <span class="wl-price">${GenexWishlist.fmt(item.price)}</span>
+            ${item.oldPrice ? `<span class="wl-old">${GenexWishlist.fmt(item.oldPrice)}</span>` : ''}
+          </div>
+          <div class="wl-actions">
+            <button class="wl-add-cart" type="button" data-action="cart" data-name="${item.name}">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>`).join('');
+
+    grid.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name   = btn.dataset.name;
+        const action = btn.dataset.action;
+        const item   = GenexWishlist.getItems().find(i => i.name === name);
+
+        if (action === 'remove') {
+          GenexWishlist.removeItem(name);
+          renderWishlist();
+        } else if (action === 'cart' && item) {
+          GenexCart.addItem(item);
+          btn.innerHTML      = '<i class="fas fa-check"></i> Added!';
+          btn.style.background  = '#16a34a';
+          btn.style.color       = '#fff';
+          btn.style.borderColor = 'transparent';
+          setTimeout(() => {
+            btn.innerHTML      = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+            btn.style.background  = '';
+            btn.style.color       = '';
+            btn.style.borderColor = '';
+          }, 1500);
+        }
+      });
+    });
+  }
+
+  document.getElementById('wlMoveAllBtn').addEventListener('click', () => {
+    GenexWishlist.getItems().forEach(i => GenexCart.addItem(i));
+    GenexWishlist.clear();
+    renderWishlist();
+  });
+
+  document.getElementById('wlClearBtn').addEventListener('click', () => {
+    if (confirm('Remove all items from your wishlist?')) {
+      GenexWishlist.clear();
+      renderWishlist();
+    }
+  });
+
+  renderWishlist();
+})();
+</script>
+</body>
+</html>

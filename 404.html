@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Page not found - Genex. The page you're looking for doesn't exist.">
+  <title>404 - Page Not Found | Genex</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .error-bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .error-bg-orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(212,146,10,.12) 0%, transparent 70%);
+      top: -100px; left: -100px;
+    }
+    .error-bg-orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(59,130,246,.07) 0%, transparent 70%);
+      bottom: -80px; right: -80px;
+    }
+    .error-code {
+      font-size: clamp(100px, 20vw, 180px);
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, #d4920a 0%, #ff6b00 50%, rgba(212,146,10,.3) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .error-icon {
+      font-size: 48px;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .error-title {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .error-desc {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 460px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .error-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+    .error-search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 12px 20px;
+      max-width: 400px;
+      width: 100%;
+      margin: 0 auto 56px;
+      transition: var(--t);
+    }
+    .error-search:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(212,146,10,.1);
+    }
+    .error-search i { color: var(--text-muted); }
+    .error-search input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+    }
+    .error-search input::placeholder { color: var(--text-muted); }
+    .error-search button {
+      background: var(--gold);
+      border: none;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: var(--t);
+    }
+    .error-search button:hover { transform: scale(1.1); }
+    .error-links-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+    .error-quick-links {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .error-quick-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: var(--t);
+    }
+    .error-quick-links a:hover {
+      background: rgba(212,146,10,.1);
+      border-color: rgba(212,146,10,.3);
+      color: var(--primary);
+    }
+    .error-quick-links a i { font-size: 11px; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header-slot"></div>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/wishlist.js"></script>
+<script src="components/header.js"></script>
+
+<!-- 404 CONTENT -->
+<main class="error-page">
+  <div class="error-bg-orb error-bg-orb-1"></div>
+  <div class="error-bg-orb error-bg-orb-2"></div>
+
+  <div class="error-icon"><i class="fas fa-plug"></i></div>
+
+  <div class="error-code">404</div>
+
+  <h1 class="error-title">Page Not Found</h1>
+  <p class="error-desc">
+    Oops! The page you're looking for seems to have gone offline. It may have been moved, deleted, or the link may be incorrect.
+  </p>
+
+  <div class="error-actions">
+    <a href="index.html" class="btn btn-gold"><i class="fas fa-home"></i> Go Home</a>
+    <a href="shop.html" class="btn btn-ghost"><i class="fas fa-shopping-bag"></i> Browse Shop</a>
+  </div>
+
+  <div class="error-search">
+    <i class="fas fa-search"></i>
+    <input type="text" id="errSearch" placeholder="Search for products...">
+    <button id="errSearchBtn" aria-label="Search"><i class="fas fa-arrow-right"></i></button>
+  </div>
+
+  <p class="error-links-label">Or jump to a page</p>
+  <nav class="error-quick-links">
+    <a href="shop.html"><i class="fas fa-store"></i> Shop</a>
+    <a href="wholesale.html"><i class="fas fa-boxes"></i> Wholesale</a>
+    <a href="brands.html"><i class="fas fa-certificate"></i> Brands</a>
+    <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a>
+  </nav>
+</main>
+
+<!-- FOOTER -->
+<div id="footer-slot"></div>
+<script src="components/footer.js"></script>
+
+<button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<script src="assets/js/main.js"></script>
+<script>
+function doErrSearch() {
+  const q = document.getElementById('errSearch').value.trim();
+  if (q) window.location.href = 'shop.html?q=' + encodeURIComponent(q);
+}
+document.getElementById('errSearch').addEventListener('keydown', e => { if (e.key === 'Enter') doErrSearch(); });
+document.getElementById('errSearchBtn').addEventListener('click', doErrSearch);
+</script>
+</body>
+</html>
