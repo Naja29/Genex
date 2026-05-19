@@ -1,3 +1,11 @@
+﻿<?php
+require_once __DIR__ . '/includes/functions.php';
+
+$phone      = getSetting('store_whatsapp', '94777237962');
+$phoneClean = preg_replace('/\D/', '', $phone);
+$email      = getSetting('email', 'genecoretech@gmail.com');
+$facebook   = getSetting('facebook_url', 'https://web.facebook.com/genecoretech');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,10 +22,8 @@
 </head>
 <body>
 
-<!-- Page Loader -->
 <div class="page-loader"><div class="loader-bar"></div></div>
 
-<!-- HEADER -->
 <div id="header-slot"></div>
 <script src="assets/js/cart.js"></script>
 <script src="assets/js/wishlist.js"></script>
@@ -35,7 +41,7 @@
       <p>Find quick answers to the most common questions about shopping at Genex.</p>
     </div>
     <nav class="breadcrumb" aria-label="Breadcrumb" data-anim="up" data-delay="2">
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index.php"><i class="fas fa-home"></i> Home</a>
       <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
       <span>FAQ</span>
     </nav>
@@ -71,7 +77,7 @@
         <div class="faq-no-results" id="faqNoResults">
           <i class="fas fa-search"></i>
           <p>No questions found for your search. Try different keywords.</p>
-          <a href="contact.html" class="btn btn-gold" style="margin-top:16px"><i class="fas fa-envelope"></i> Ask Us Directly</a>
+          <a href="contact.php" class="btn btn-gold" style="margin-top:16px"><i class="fas fa-envelope"></i> Ask Us Directly</a>
         </div>
 
         <!-- Group: Orders & Shopping -->
@@ -86,8 +92,8 @@
             <div class="faq-a"><div class="faq-a-inner">
               <p>You can order in two easy ways:</p>
               <ul>
-                <li>Browse our <a href="shop.html">online shop</a>, add items to your cart, then send your order via WhatsApp using the "Order via WhatsApp" button in your cart.</li>
-                <li>Contact us directly on <a href="https://wa.me/94777237962" target="_blank">WhatsApp +94 77 723 7962</a> with the product name and quantity.</li>
+                <li>Browse our <a href="shop.php">online shop</a>, add items to your cart, then send your order via WhatsApp using the "Order via WhatsApp" button in your cart.</li>
+                <li>Contact us directly on <a href="https://wa.me/<?= htmlspecialchars($phoneClean) ?>" target="_blank">WhatsApp <?= htmlspecialchars($phone) ?></a> with the product name and quantity.</li>
               </ul>
               <p>Our team will confirm availability, pricing and arrange delivery.</p>
             </div></div>
@@ -97,7 +103,7 @@
             <button class="faq-q">Can I visit the store to buy in person?<i class="fas fa-chevron-down faq-chevron"></i></button>
             <div class="faq-a"><div class="faq-a-inner">
               <p>Yes! We welcome walk-in customers at our store in Lenabatuwa, Kamburupitiya, Matara District. Our opening hours are Monday to Saturday, 8:00 AM – 7:00 PM. We are closed on Sundays.</p>
-              <p>We recommend calling ahead on <a href="tel:+94777237962">+94 77 723 7962</a> to confirm stock availability for specific items before travelling.</p>
+              <p>We recommend calling ahead on <a href="tel:+<?= htmlspecialchars($phoneClean) ?>"><?= htmlspecialchars($phone) ?></a> to confirm stock availability for specific items before travelling.</p>
             </div></div>
           </div>
 
@@ -127,7 +133,7 @@
           <div class="faq-item">
             <button class="faq-q">Can I cancel or change my order after placing it?<i class="fas fa-chevron-down faq-chevron"></i></button>
             <div class="faq-a"><div class="faq-a-inner">
-              <p>Yes, you can cancel or modify your order before it is dispatched. Please contact us immediately via WhatsApp or phone. Once an order has been dispatched, it cannot be cancelled but may be eligible for return after delivery under our <a href="returns.html">Return Policy</a>.</p>
+              <p>Yes, you can cancel or modify your order before it is dispatched. Please contact us immediately via WhatsApp or phone. Once an order has been dispatched, it cannot be cancelled but may be eligible for return after delivery under our <a href="returns.php">Return Policy</a>.</p>
             </div></div>
           </div>
         </div>
@@ -198,14 +204,14 @@
             <button class="faq-q">What is your return policy?<i class="fas fa-chevron-down faq-chevron"></i></button>
             <div class="faq-a"><div class="faq-a-inner">
               <p>We accept returns within <strong>7 days</strong> of delivery for items that are defective, damaged, or not as described. Items must be in their original, unused condition with all original packaging, accessories and documentation intact.</p>
-              <p>For full details, please read our <a href="returns.html">Return Policy</a>.</p>
+              <p>For full details, please read our <a href="returns.php">Return Policy</a>.</p>
             </div></div>
           </div>
 
           <div class="faq-item">
             <button class="faq-q">My product is faulty - what should I do?<i class="fas fa-chevron-down faq-chevron"></i></button>
             <div class="faq-a"><div class="faq-a-inner">
-              <p>Contact us immediately via WhatsApp (+94 77 723 7962) or email (genecoretech@gmail.com) with:</p>
+              <p>Contact us immediately via WhatsApp (<a href="https://wa.me/<?= htmlspecialchars($phoneClean) ?>" target="_blank"><?= htmlspecialchars($phone) ?></a>) or email (<a href="mailto:<?= htmlspecialchars($email) ?>"><?= htmlspecialchars($email) ?></a>) with:</p>
               <ul>
                 <li>Your order details / invoice number</li>
                 <li>A clear description of the fault</li>
@@ -240,7 +246,7 @@
           <div class="faq-item">
             <button class="faq-q">Do you offer wholesale pricing?<i class="fas fa-chevron-down faq-chevron"></i></button>
             <div class="faq-a"><div class="faq-a-inner">
-              <p>Yes! Genex is both a retail and wholesale supplier. We offer special pricing for bulk purchases. Our wholesale tiers start from as few as 5 units for selected products. Visit our <a href="wholesale.html">Wholesale page</a> for full details or contact us directly.</p>
+              <p>Yes! Genex is both a retail and wholesale supplier. We offer special pricing for bulk purchases. Our wholesale tiers start from as few as 5 units for selected products. Visit our <a href="wholesale.php">Wholesale page</a> for full details or contact us directly.</p>
             </div></div>
           </div>
 
@@ -261,7 +267,7 @@
           <div class="faq-item">
             <button class="faq-q">How do I get a wholesale price quote?<i class="fas fa-chevron-down faq-chevron"></i></button>
             <div class="faq-a"><div class="faq-a-inner">
-              <p>Submit your inquiry through our <a href="wholesale.html">Wholesale page</a> or contact us on WhatsApp with the product names and quantities needed. We will respond with a price list and quotation within a few hours during business hours.</p>
+              <p>Submit your inquiry through our <a href="wholesale.php">Wholesale page</a> or contact us on WhatsApp with the product names and quantities needed. We will respond with a price list and quotation within a few hours during business hours.</p>
             </div></div>
           </div>
 
@@ -334,10 +340,10 @@
             <div class="faq-a"><div class="faq-a-inner">
               <p>You can reach us through multiple channels:</p>
               <ul>
-                <li><strong>WhatsApp:</strong> <a href="https://wa.me/94777237962" target="_blank">+94 77 723 7962</a> (fastest response)</li>
-                <li><strong>Phone:</strong> <a href="tel:+94777237962">+94 77 723 7962</a></li>
-                <li><strong>Email:</strong> <a href="mailto:genecoretech@gmail.com">genecoretech@gmail.com</a></li>
-                <li><strong>Contact Form:</strong> <a href="contact.html">Visit our Contact page</a></li>
+                <li><strong>WhatsApp:</strong> <a href="https://wa.me/<?= htmlspecialchars($phoneClean) ?>" target="_blank"><?= htmlspecialchars($phone) ?></a> (fastest response)</li>
+                <li><strong>Phone:</strong> <a href="tel:+<?= htmlspecialchars($phoneClean) ?>"><?= htmlspecialchars($phone) ?></a></li>
+                <li><strong>Email:</strong> <a href="mailto:<?= htmlspecialchars($email) ?>"><?= htmlspecialchars($email) ?></a></li>
+                <li><strong>Contact Form:</strong> <a href="contact.php">Visit our Contact page</a></li>
               </ul>
               <p>We are available Monday - Saturday, 8:00 AM - 7:00 PM.</p>
             </div></div>
@@ -346,7 +352,7 @@
           <div class="faq-item">
             <button class="faq-q">Do you have a Facebook or social media page?<i class="fas fa-chevron-down faq-chevron"></i></button>
             <div class="faq-a"><div class="faq-a-inner">
-              <p>Yes! Follow us on Facebook at <a href="https://web.facebook.com/genecoretech" target="_blank" rel="noopener">facebook.com/genecoretech</a> for product updates, special deals and announcements. We are also active on WhatsApp and other social platforms.</p>
+              <p>Yes! Follow us on Facebook at <a href="<?= htmlspecialchars($facebook) ?>" target="_blank" rel="noopener"><?= htmlspecialchars(preg_replace('#^https?://(www\.)?#', '', $facebook)) ?></a> for product updates, special deals and announcements. We are also active on WhatsApp and other social platforms.</p>
             </div></div>
           </div>
         </div>
@@ -364,23 +370,20 @@
       <h2 class="section-title">Still Have <em>Questions?</em></h2>
       <p class="section-desc" style="max-width:480px;margin:0 auto 28px">Can't find the answer you're looking for? Our team is happy to help you directly.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <a href="https://wa.me/94777237962" target="_blank" rel="noopener" class="btn btn-gold"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
-        <a href="contact.html" class="btn btn-ghost"><i class="fas fa-envelope"></i> Send a Message</a>
+        <a href="https://wa.me/<?= htmlspecialchars($phoneClean) ?>" target="_blank" rel="noopener" class="btn btn-gold"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+        <a href="contact.php" class="btn btn-ghost"><i class="fas fa-envelope"></i> Send a Message</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <div id="footer-slot"></div>
 <script src="components/footer.js"></script>
 
-<!-- Scroll to Top -->
 <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
   <i class="fas fa-chevron-up"></i>
 </button>
 
-<!-- Main Script -->
 <script src="assets/js/main.js"></script>
 <script>
 /* FAQ Accordion */

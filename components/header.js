@@ -28,7 +28,7 @@
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
 
-    <a href="index.html" class="site-logo">
+    <a href="index.php" class="site-logo">
       <img src="images/logo.jpg" alt="Genex - Global Xperience">
     </a>
 
@@ -42,13 +42,13 @@
         <i class="fas fa-phone-alt"></i>
         <div>
           <span class="hp-label">Call Us Now</span>
-          <a href="tel:+94777237962" class="hp-num">+94 77 723 7962</a>
+          <a href="tel:+94777237962" class="hp-num" id="gnxHeaderPhone">+94 77 723 7962</a>
         </div>
       </div>
 
       <div class="header-icons">
         <a href="#" class="h-icon" title="Wishlist" style="position:relative"><i class="far fa-heart"></i><span class="wish-badge" id="wishCount">0</span></a>
-        <a href="account.html" class="h-icon" title="My Account"><i class="far fa-user"></i></a>
+        <a href="account.php" class="h-icon" title="My Account"><i class="far fa-user"></i></a>
         <a href="#" class="h-icon" title="Cart" style="position:relative">
           <i class="fas fa-shopping-cart"></i>
           <span class="cart-badge" id="cartCount">0</span>
@@ -69,49 +69,37 @@
     <ul class="nav-list">
 
       <li class="nav-item">
-        <a href="index.html" class="nav-link">Home</a>
+        <a href="index.php" class="nav-link">Home</a>
       </li>
 
       <li class="nav-item">
-        <a href="shop.html" class="nav-link">
+        <a href="shop.php" class="nav-link">
           Shop <i class="fas fa-chevron-down arr"></i>
         </a>
-        <div class="nav-drop">
-          <a href="#"><i class="fas fa-microchip"></i> Processors</a>
-          <a href="#"><i class="fas fa-server"></i> Motherboards</a>
-          <a href="#"><i class="fas fa-memory"></i> RAM</a>
-          <a href="#"><i class="fas fa-hdd"></i> Storage - SSD &amp; HDD</a>
-          <a href="#"><i class="fas fa-desktop"></i> Graphics Cards</a>
-          <a href="#"><i class="fas fa-tv"></i> Monitors</a>
-          <a href="#"><i class="fas fa-keyboard"></i> Keyboards</a>
-          <a href="#"><i class="fas fa-mouse"></i> Mouse</a>
-          <a href="#"><i class="fas fa-plug"></i> Cables</a>
-          <a href="#"><i class="fas fa-battery-full"></i> Power Banks</a>
-          <a href="#"><i class="fas fa-charging-station"></i> Chargers</a>
-          <a href="#"><i class="fas fa-headphones"></i> Earphones</a>
-          <a href="#"><i class="fas fa-mobile-alt"></i> Mobile Displays &amp; Accessories</a>
+        <div class="nav-drop" id="gnxNavDrop">
+          <a href="shop.php"><i class="fas fa-th-large"></i> All Products</a>
         </div>
       </li>
 
       <li class="nav-item">
-        <a href="brands.html" class="nav-link">Brands</a>
+        <a href="brands.php" class="nav-link">Brands</a>
       </li>
 
       <li class="nav-item">
-        <a href="wholesale.html" class="nav-link">Wholesale</a>
+        <a href="wholesale.php" class="nav-link">Wholesale</a>
       </li>
 
       <li class="nav-item">
-        <a href="about.html" class="nav-link">About Us</a>
+        <a href="about.php" class="nav-link">About Us</a>
       </li>
 
       <li class="nav-item">
-        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="contact.php" class="nav-link">Contact</a>
       </li>
 
     </ul>
 
-    <a href="https://wa.me/94777237962" target="_blank" rel="noopener" class="nav-wa-btn">
+    <a href="https://wa.me/94777237962" target="_blank" rel="noopener" class="nav-wa-btn" id="gnxNavWa">
       <i class="fab fa-whatsapp"></i> Order via WhatsApp
     </a>
   </div>
@@ -119,84 +107,19 @@
 
 <!-- Category Strip -->
 <div class="cat-strip">
-  <div class="cat-strip-inner">
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-microchip"></i></div>
-      <span>Processors</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-server"></i></div>
-      <span>Motherboards</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-memory"></i></div>
-      <span>RAM</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-hdd"></i></div>
-      <span>Storage</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-desktop"></i></div>
-      <span>Graphics Cards</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-tv"></i></div>
-      <span>Monitors</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-keyboard"></i></div>
-      <span>Keyboards</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-mouse"></i></div>
-      <span>Mouse</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-plug"></i></div>
-      <span>Cables</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-battery-full"></i></div>
-      <span>Power Banks</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-charging-station"></i></div>
-      <span>Chargers</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-headphones"></i></div>
-      <span>Earphones</span>
-    </a>
-    <a href="#" class="cat-strip-item">
-      <div class="cat-icon-box"><i class="fas fa-mobile-alt"></i></div>
-      <span>Mobile Displays</span>
-    </a>
-  </div>
+  <div class="cat-strip-inner" id="gnxCatStrip"></div>
 </div>
 
 <!-- Mobile Nav Overlay -->
 <div class="mobile-nav" id="mobileNav">
-  <a href="index.html"><i class="fas fa-home"></i> Home</a>
-  <a href="shop.html" style="font-weight:700;color:#fff"><i class="fas fa-th-large"></i> Shop by Category</a>
-  <div class="mobile-nav-cats">
-    <a href="#"><i class="fas fa-microchip"></i> Processors</a>
-    <a href="#"><i class="fas fa-server"></i> Motherboards</a>
-    <a href="#"><i class="fas fa-memory"></i> RAM</a>
-    <a href="#"><i class="fas fa-hdd"></i> Storage (SSD / HDD)</a>
-    <a href="#"><i class="fas fa-desktop"></i> Graphics Cards</a>
-    <a href="#"><i class="fas fa-tv"></i> Monitors</a>
-    <a href="#"><i class="fas fa-keyboard"></i> Keyboards &amp; Mouse</a>
-    <a href="#"><i class="fas fa-plug"></i> Cables &amp; Accessories</a>
-    <a href="#"><i class="fas fa-battery-full"></i> Power Banks &amp; Chargers</a>
-    <a href="#"><i class="fas fa-headphones"></i> Earphones</a>
-    <a href="#"><i class="fas fa-mobile-alt"></i> Mobile Displays</a>
-  </div>
-  <a href="brands.html"><i class="fas fa-star"></i> Brands</a>
-  <a href="wholesale.html"><i class="fas fa-boxes"></i> Wholesale</a>
-  <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
-  <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-  <a href="https://wa.me/94777237962" target="_blank" style="color:#25d366;margin-top:10px">
+  <a href="index.php"><i class="fas fa-home"></i> Home</a>
+  <a href="shop.php" style="font-weight:700;color:#fff"><i class="fas fa-th-large"></i> Shop by Category</a>
+  <div class="mobile-nav-cats" id="gnxMobileCats"></div>
+  <a href="brands.php"><i class="fas fa-star"></i> Brands</a>
+  <a href="wholesale.php"><i class="fas fa-boxes"></i> Wholesale</a>
+  <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+  <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
+  <a href="https://wa.me/94777237962" target="_blank" style="color:#25d366;margin-top:10px" id="gnxMobileWa">
     <i class="fab fa-whatsapp"></i> WhatsApp Order
   </a>
 </div>
@@ -218,7 +141,7 @@
       <strong id="drawerTotal">Rs. 0</strong>
     </div>
     <p class="cart-drawer-note"><i class="fas fa-truck"></i> Delivery calculated at checkout</p>
-    <a href="cart.html" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-shopping-bag"></i> View Full Cart</a>
+    <a href="cart.php" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-shopping-bag"></i> View Full Cart</a>
     <a id="drawerWaBtn" href="#" target="_blank" rel="noopener" class="btn btn-green" style="width:100%;justify-content:center"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
   </div>
 </div>`;
@@ -234,7 +157,7 @@
   </div>
   <div class="wish-drawer-body" id="wishDrawerBody"></div>
   <div class="wish-drawer-footer" id="wishDrawerFooter">
-    <a href="wishlist.html" class="btn btn-ghost" style="width:100%;justify-content:center"><i class="fas fa-heart"></i> View Full Wishlist</a>
+    <a href="wishlist.php" class="btn btn-ghost" style="width:100%;justify-content:center"><i class="fas fa-heart"></i> View Full Wishlist</a>
     <button id="wishMoveAllBtn" type="button" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-shopping-cart"></i> Move All to Cart</button>
   </div>
 </div>`;
@@ -268,7 +191,7 @@
         <div class="wish-drawer-empty">
           <i class="far fa-heart"></i>
           <p>Your wishlist is empty</p>
-          <a href="shop.html" class="btn btn-primary" style="margin-top:4px"><i class="fas fa-store"></i> Browse Products</a>
+          <a href="shop.php" class="btn btn-primary" style="margin-top:4px"><i class="fas fa-store"></i> Browse Products</a>
         </div>`;
       return;
     }
@@ -353,7 +276,7 @@
         <div class="cart-drawer-empty">
           <i class="fas fa-shopping-cart"></i>
           <p>Your cart is empty</p>
-          <a href="shop.html" class="btn btn-primary" style="margin-top:4px"><i class="fas fa-store"></i> Browse Products</a>
+          <a href="shop.php" class="btn btn-primary" style="margin-top:4px"><i class="fas fa-store"></i> Browse Products</a>
         </div>`;
       return;
     }
@@ -406,10 +329,10 @@
   });
 
   // Set active nav link based on current page
-  const page = location.pathname.split('/').pop() || 'index.html';
+  const page = location.pathname.split('/').pop() || 'index.php';
   document.querySelectorAll('.nav-link').forEach(link => {
-    const href = link.getAttribute('href').split('/').pop();
-    if (href === page || (page === '' && href === 'index.html')) {
+    const href = link.getAttribute('href').split('/').pop().split('?')[0];
+    if (href === page || (page === '' && href === 'index.php')) {
       link.classList.add('active');
     }
   });
@@ -428,12 +351,89 @@
       shopSearch.dispatchEvent(new Event('input'));
       shopSearch.closest('.sf-block').scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
-      window.location.href = 'shop.html?q=' + encodeURIComponent(q);
+      window.location.href = 'shop.php?q=' + encodeURIComponent(q);
     }
   }
 
   searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
   if (searchBtn) searchBtn.addEventListener('click', doSearch);
+
+  // Load categories from API and populate nav-drop, cat-strip, mobile-nav
+  (function loadCategories() {
+    var base = (function () {
+      var s = document.querySelector('script[src*="components/header.js"]');
+      if (s) return s.src.replace('components/header.js', '');
+      return location.origin + location.pathname.replace(/\/[^/]*$/, '/');
+    })();
+
+    fetch(base + 'api/categories.php')
+      .then(function (r) { return r.json(); })
+      .then(function (cats) {
+        var navDrop    = document.getElementById('gnxNavDrop');
+        var catStrip   = document.getElementById('gnxCatStrip');
+        var mobileCats = document.getElementById('gnxMobileCats');
+
+        var dropHtml   = '<a href="shop.php"><i class="fas fa-th-large"></i> All Products</a>';
+        var stripHtml  = '';
+        var mobileHtml = '';
+
+        cats.forEach(function (c) {
+          var url  = 'shop.php?cat=' + encodeURIComponent(c.slug);
+          var icon = c.icon || 'fas fa-box';
+
+          dropHtml  += '<a href="' + url + '"><i class="' + icon + '"></i> ' + c.name + '</a>';
+
+          stripHtml += '<a href="' + url + '" class="cat-strip-item">' +
+                         '<div class="cat-icon-box"><i class="' + icon + '"></i></div>' +
+                         '<span>' + c.name + '</span>' +
+                       '</a>';
+
+          mobileHtml += '<a href="' + url + '"><i class="' + icon + '"></i> ' + c.name + '</a>';
+        });
+
+        if (navDrop)    navDrop.innerHTML    = dropHtml;
+        if (catStrip)   catStrip.innerHTML   = stripHtml;
+        if (mobileCats) mobileCats.innerHTML = mobileHtml;
+
+        // Re-highlight active cat-strip item based on ?cat= param
+        var urlCat = new URLSearchParams(location.search).get('cat');
+        if (urlCat && catStrip) {
+          catStrip.querySelectorAll('.cat-strip-item').forEach(function (el) {
+            if (el.href.indexOf('cat=' + urlCat) !== -1) el.classList.add('active');
+          });
+        }
+      })
+      .catch(function () { /* silently fail - nav still shows All Products */ });
+  })();
+
+  // Load settings (WhatsApp, phone) from API
+  (function loadSettings() {
+    var base = (function () {
+      var s = document.querySelector('script[src*="components/header.js"]');
+      if (s) return s.src.replace('components/header.js', '');
+      return location.origin + location.pathname.replace(/\/[^/]*$/, '/');
+    })();
+
+    fetch(base + 'api/settings.php')
+      .then(function (r) { return r.json(); })
+      .then(function (cfg) {
+        var wa    = cfg.whatsapp || '94777237962';
+        var phone = cfg.phone    || '+94 77 723 7962';
+        var waUrl = 'https://wa.me/' + wa;
+
+        // Expose for cart.js buildWaText()
+        window.GENEX_WA = wa;
+
+        var navWa    = document.getElementById('gnxNavWa');
+        var mobileWa = document.getElementById('gnxMobileWa');
+        var hPhone   = document.getElementById('gnxHeaderPhone');
+
+        if (navWa)    navWa.href    = waUrl;
+        if (mobileWa) mobileWa.href = waUrl;
+        if (hPhone)   { hPhone.href = 'tel:' + phone.replace(/\s/g, ''); hPhone.textContent = phone; }
+      })
+      .catch(function () {});
+  })();
 
   // Pin nav to top when it scrolls out of view
   const nav  = document.getElementById('mainNav');

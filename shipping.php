@@ -1,3 +1,9 @@
+﻿<?php
+require_once __DIR__ . '/includes/functions.php';
+
+$phone      = getSetting('store_whatsapp', '94777237962');
+$phoneClean = preg_replace('/\D/', '', $phone);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,10 +20,8 @@
 </head>
 <body>
 
-<!-- Page Loader -->
 <div class="page-loader"><div class="loader-bar"></div></div>
 
-<!-- HEADER -->
 <div id="header-slot"></div>
 <script src="assets/js/cart.js"></script>
 <script src="assets/js/wishlist.js"></script>
@@ -35,7 +39,7 @@
       <p>Fast, reliable island-wide delivery. Here's everything you need to know about how we ship your order.</p>
     </div>
     <nav class="breadcrumb" aria-label="Breadcrumb" data-anim="up" data-delay="2">
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index.php"><i class="fas fa-home"></i> Home</a>
       <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
       <span>Shipping Policy</span>
     </nav>
@@ -126,17 +130,17 @@
                   <td style="padding:12px 16px">1-2 business days</td>
                 </tr>
                 <tr style="border-bottom:1px solid var(--border)">
-                  <td style="padding:12px 16px"><strong style="color:var(--text-2)">Central & Sabaragamuwa</strong></td>
+                  <td style="padding:12px 16px"><strong style="color:var(--text-2)">Central &amp; Sabaragamuwa</strong></td>
                   <td style="padding:12px 16px">Kandy, Nuwara Eliya, Kegalle, Ratnapura</td>
                   <td style="padding:12px 16px">1-2 business days</td>
                 </tr>
                 <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,.02)">
-                  <td style="padding:12px 16px"><strong style="color:var(--text-2)">North Western & North Central</strong></td>
+                  <td style="padding:12px 16px"><strong style="color:var(--text-2)">North Western &amp; North Central</strong></td>
                   <td style="padding:12px 16px">Kurunegala, Puttalam, Anuradhapura, Polonnaruwa</td>
                   <td style="padding:12px 16px">2-3 business days</td>
                 </tr>
                 <tr style="border-bottom:1px solid var(--border)">
-                  <td style="padding:12px 16px"><strong style="color:var(--text-2)">Uva & Eastern</strong></td>
+                  <td style="padding:12px 16px"><strong style="color:var(--text-2)">Uva &amp; Eastern</strong></td>
                   <td style="padding:12px 16px">Badulla, Monaragala, Ampara, Batticaloa, Trincomalee</td>
                   <td style="padding:12px 16px">2-3 business days</td>
                 </tr>
@@ -206,8 +210,8 @@
               <span>Mon - Sat, 8:00 AM - 7:00 PM</span>
             </div>
             <div class="pcb-links">
-              <a href="https://wa.me/94777237962" target="_blank" rel="noopener" class="btn btn-gold btn-sm"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-              <a href="contact.html" class="btn btn-ghost btn-sm"><i class="fas fa-envelope"></i> Contact Form</a>
+              <a href="https://wa.me/<?= htmlspecialchars($phoneClean) ?>" target="_blank" rel="noopener" class="btn btn-gold btn-sm"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+              <a href="contact.php" class="btn btn-ghost btn-sm"><i class="fas fa-envelope"></i> Contact Form</a>
             </div>
           </div>
         </div>
@@ -217,7 +221,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <div id="footer-slot"></div>
 <script src="components/footer.js"></script>
 

@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/includes/functions.php';
+
+$email = getSetting('email', 'genecoretech@gmail.com');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,10 +19,8 @@
 </head>
 <body>
 
-<!-- Page Loader -->
 <div class="page-loader"><div class="loader-bar"></div></div>
 
-<!-- HEADER -->
 <div id="header-slot"></div>
 <script src="assets/js/cart.js"></script>
 <script src="assets/js/wishlist.js"></script>
@@ -35,7 +38,7 @@
       <p>Please read these terms carefully before using our website or purchasing from Genex.</p>
     </div>
     <nav class="breadcrumb" aria-label="Breadcrumb" data-anim="up" data-delay="2">
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index.php"><i class="fas fa-home"></i> Home</a>
       <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
       <span>Terms &amp; Conditions</span>
     </nav>
@@ -126,7 +129,7 @@
           </ul>
           <p>All payments must be in Sri Lankan Rupees. Full payment (or agreed deposit) is required before dispatch for online orders.</p>
           <h3>Order Cancellation</h3>
-          <p>Orders may be cancelled before dispatch at no charge. Once dispatched, cancellation is not possible; however, the item may be eligible for return under our <a href="returns.html">Return Policy</a>.</p>
+          <p>Orders may be cancelled before dispatch at no charge. Once dispatched, cancellation is not possible; however, the item may be eligible for return after delivery under our <a href="returns.php">Return Policy</a>.</p>
           <div class="policy-highlight">
             <p>Genex reserves the right to cancel any order at any time if we suspect fraud, if payment is not received, or if the product is no longer available. A full refund will be issued in such cases.</p>
           </div>
@@ -135,7 +138,7 @@
         <!-- 05 -->
         <div class="policy-section" id="delivery">
           <h2><span class="ps-num">05</span> Delivery</h2>
-          <p>We deliver island-wide across Sri Lanka. Delivery timeframes and charges are set out in our <a href="shipping.html">Shipping Policy</a>.</p>
+          <p>We deliver island-wide across Sri Lanka. Delivery timeframes and charges are set out in our <a href="shipping.php">Shipping Policy</a>.</p>
           <p>Delivery times are estimates and are not guaranteed. We are not liable for delays caused by courier partners, weather conditions, natural disasters, or other factors outside our control.</p>
           <p>Risk of loss and damage to the products passes to the customer upon delivery to the address provided. Please inspect your order at the time of delivery and report any visible damage immediately.</p>
         </div>
@@ -143,7 +146,7 @@
         <!-- 06 -->
         <div class="policy-section" id="returns-terms">
           <h2><span class="ps-num">06</span> Returns &amp; Refunds</h2>
-          <p>Returns and refunds are governed by our <a href="returns.html">Return &amp; Refund Policy</a>, which forms part of these Terms and Conditions. By purchasing from us, you agree to the conditions set out in that policy.</p>
+          <p>Returns and refunds are governed by our <a href="returns.php">Return &amp; Refund Policy</a>, which forms part of these Terms and Conditions. By purchasing from us, you agree to the conditions set out in that policy.</p>
           <p>In summary, we accept returns within 7 days of delivery for defective, damaged or incorrectly supplied items. All returns must be approved by us before the item is sent back.</p>
         </div>
 
@@ -187,8 +190,8 @@
               <span>Lenabatuwa, Kamburupitiya, Matara - 81100, Sri Lanka</span>
             </div>
             <div class="pcb-links">
-              <a href="mailto:genecoretech@gmail.com" class="btn btn-gold btn-sm"><i class="fas fa-envelope"></i> Email</a>
-              <a href="contact.html" class="btn btn-ghost btn-sm"><i class="fas fa-paper-plane"></i> Contact Form</a>
+              <a href="mailto:<?= htmlspecialchars($email) ?>" class="btn btn-gold btn-sm"><i class="fas fa-envelope"></i> Email</a>
+              <a href="contact.php" class="btn btn-ghost btn-sm"><i class="fas fa-paper-plane"></i> Contact Form</a>
             </div>
           </div>
         </div>
@@ -198,7 +201,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <div id="footer-slot"></div>
 <script src="components/footer.js"></script>
 

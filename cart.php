@@ -1,3 +1,20 @@
+﻿<?php
+require_once __DIR__ . '/includes/functions.php';
+$db = getDB();
+
+$waNumber = getSetting('store_whatsapp', '94777237962');
+$waClean  = preg_replace('/\D/', '', $waNumber);
+
+// "You Might Also Like" - pick 4 featured/random active products
+$related = $db->query('
+    SELECT p.*, c.name AS cat_name, c.slug AS cat_slug
+    FROM products p
+    JOIN categories c ON p.category_id = c.id
+    WHERE p.is_active = 1
+    ORDER BY p.is_featured DESC, RAND()
+    LIMIT 4
+')->fetchAll();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +40,7 @@
 <div style="background:var(--bg-2);border-bottom:1px solid var(--border);padding:12px 0">
   <div class="container">
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index.php"><i class="fas fa-home"></i> Home</a>
       <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
       <span>Your Cart</span>
     </nav>
@@ -52,7 +69,7 @@
         <i class="fas fa-shopping-cart"></i>
         <h3>Your cart is empty</h3>
         <p>Looks like you haven't added anything yet.</p>
-        <a href="shop.html" class="btn btn-primary" style="margin-top:8px"><i class="fas fa-store"></i> Browse Products</a>
+        <a href="shop.php" class="btn btn-primary" style="margin-top:8px"><i class="fas fa-store"></i> Browse Products</a>
       </div>
     </div>
 
@@ -74,7 +91,7 @@
         </div>
 
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px;flex-wrap:wrap;gap:12px">
-          <a href="shop.html" class="btn btn-ghost"><i class="fas fa-arrow-left"></i> Continue Shopping</a>
+          <a href="shop.php" class="btn btn-ghost"><i class="fas fa-arrow-left"></i> Continue Shopping</a>
           <button class="cart-clear-btn" id="cartClearBtn" type="button"><i class="fas fa-trash-alt"></i> Clear Cart</button>
         </div>
       </div>
@@ -102,10 +119,13 @@
         </p>
 
         <div class="cart-summary-actions">
+          <a href="checkout.php" class="btn btn-primary" style="justify-content:center">
+            <i class="fas fa-shopping-bag"></i> Place Order Online
+          </a>
           <a id="waOrderBtn" href="#" target="_blank" rel="noopener" class="btn btn-green" style="justify-content:center">
             <i class="fab fa-whatsapp"></i> Order via WhatsApp
           </a>
-          <a href="contact.html" class="btn btn-ghost" style="justify-content:center">
+          <a href="contact.php" class="btn btn-ghost" style="justify-content:center">
             <i class="fas fa-envelope"></i> Send Inquiry Instead
           </a>
         </div>
@@ -122,7 +142,8 @@
   </div>
 </section>
 
-<!-- Related / You Might Also Like -->
+<!-- You Might Also Like -->
+<?php if ($related): ?>
 <section class="section section-dark" id="relatedSection">
   <div class="container">
     <div class="section-header" data-anim="up">
@@ -130,74 +151,71 @@
       <h2 class="section-title">You Might <em>Also Like</em></h2>
     </div>
     <div class="products-grid">
-      <div class="product-card" data-category="processors" data-brand="intel" data-price="28500" data-name="Intel Core i5-12400F 6-Core Desktop Processor" data-instock="1">
+      <?php foreach ($related as $p):
+        $inStock  = (int)($p['in_stock'] ?? 1);
+        $onSale   = $p['old_price'] ? 1 : 0;
+        $badge    = $p['badge'] ?? '';
+        $price    = (float)$p['price'];
+        $oldPrice = $p['old_price'] ? (float)$p['old_price'] : null;
+        $name     = htmlspecialchars($p['name']);
+        $catSlug  = htmlspecialchars($p['cat_slug']);
+        $brand    = strtolower(htmlspecialchars($p['brand'] ?? ''));
+        $icon     = htmlspecialchars($p['icon'] ?? 'fas fa-box');
+        $thumb    = $p['thumbnail'] ?? '';
+        $hasThumb = $thumb && file_exists(__DIR__ . '/' . $thumb);
+        $imgUrl   = $hasThumb ? htmlspecialchars(BASE_URL . $thumb) : '';
+        $link     = 'product.php?id=' . (int)$p['id'];
+        $badgeCls = match($badge) { 'HOT'=>'hot','NEW'=>'new','SALE'=>'sale', default=>'' };
+      ?>
+      <div class="product-card"
+        data-category="<?= $catSlug ?>"
+        data-brand="<?= $brand ?>"
+        data-price="<?= (int)$price ?>"
+        data-name="<?= $name ?>"
+        data-instock="<?= $inStock ?>"
+        data-sale="<?= $onSale ?>">
+
         <div class="product-img-area">
-          <span class="stock-tag in-stock">In Stock</span>
-          <span class="p-badge sale">-12%</span>
-          <div class="product-img-placeholder"><i class="fas fa-microchip"></i></div>
-          <div class="p-hover-btns"><button class="p-hover-btn" title="Add to Wishlist"><i class="far fa-heart"></i></button></div>
+          <span class="stock-tag <?= $inStock ? 'in-stock' : 'out-stock' ?>">
+            <?= $inStock ? 'In Stock' : 'Out of Stock' ?>
+          </span>
+          <?php if ($badge): ?>
+            <span class="p-badge <?= $badgeCls ?>"><?= htmlspecialchars($badge) ?></span>
+          <?php endif ?>
+
+          <?php if ($hasThumb): ?>
+            <img src="<?= $imgUrl ?>" alt="<?= $name ?>" loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="product-img-placeholder" style="display:none"><i class="<?= $icon ?>"></i></div>
+          <?php else: ?>
+            <div class="product-img-placeholder"><i class="<?= $icon ?>"></i></div>
+          <?php endif ?>
+
+          <div class="p-hover-btns">
+            <button class="p-hover-btn" title="Add to Wishlist"><i class="far fa-heart"></i></button>
+          </div>
         </div>
+
         <div class="product-body">
-          <div class="p-cat">Processors</div>
-          <div class="p-name">Intel Core i5-12400F 6-Core Desktop Processor</div>
-          <div class="p-pricing"><span class="p-price">Rs. 28,500</span><span class="p-old">Rs. 32,000</span></div>
+          <span class="p-cat"><?= htmlspecialchars($p['cat_name']) ?></span>
+          <div class="p-name"><?= $name ?></div>
+          <div class="p-pricing">
+            <span class="p-price">Rs. <?= number_format($price) ?></span>
+            <?php if ($oldPrice): ?>
+              <span class="p-old">Rs. <?= number_format($oldPrice) ?></span>
+            <?php endif ?>
+          </div>
           <div class="p-card-actions">
             <button class="btn-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-            <a href="product.html" class="btn-view" title="View Details"><i class="fas fa-eye"></i></a>
+            <a href="<?= $link ?>" class="btn-view" title="View Details"><i class="fas fa-eye"></i></a>
           </div>
         </div>
       </div>
-      <div class="product-card" data-category="ram" data-brand="kingston" data-price="8500" data-name="Kingston 16GB DDR4 3200MHz Desktop RAM" data-instock="1">
-        <div class="product-img-area">
-          <span class="stock-tag in-stock">In Stock</span>
-          <div class="product-img-placeholder"><i class="fas fa-memory"></i></div>
-          <div class="p-hover-btns"><button class="p-hover-btn" title="Add to Wishlist"><i class="far fa-heart"></i></button></div>
-        </div>
-        <div class="product-body">
-          <div class="p-cat">RAM</div>
-          <div class="p-name">Kingston 16GB DDR4 3200MHz Desktop RAM</div>
-          <div class="p-pricing"><span class="p-price">Rs. 8,500</span><span class="p-old">Rs. 9,000</span></div>
-          <div class="p-card-actions">
-            <button class="btn-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-            <a href="product.html" class="btn-view" title="View Details"><i class="fas fa-eye"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-category="storage" data-brand="samsung" data-price="12500" data-name="Samsung 500GB SSD" data-instock="1">
-        <div class="product-img-area">
-          <span class="stock-tag in-stock">In Stock</span>
-          <div class="product-img-placeholder"><i class="fas fa-hdd"></i></div>
-          <div class="p-hover-btns"><button class="p-hover-btn" title="Add to Wishlist"><i class="far fa-heart"></i></button></div>
-        </div>
-        <div class="product-body">
-          <div class="p-cat">Storage</div>
-          <div class="p-name">Samsung 870 EVO 500GB 2.5" SATA SSD</div>
-          <div class="p-pricing"><span class="p-price">Rs. 12,500</span><span class="p-old">Rs. 13,900</span></div>
-          <div class="p-card-actions">
-            <button class="btn-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-            <a href="product.html" class="btn-view" title="View Details"><i class="fas fa-eye"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" data-category="monitors" data-brand="lg" data-price="42000" data-name="LG 24 inch FHD IPS Monitor" data-instock="1">
-        <div class="product-img-area">
-          <span class="stock-tag in-stock">In Stock</span>
-          <div class="product-img-placeholder"><i class="fas fa-tv"></i></div>
-          <div class="p-hover-btns"><button class="p-hover-btn" title="Add to Wishlist"><i class="far fa-heart"></i></button></div>
-        </div>
-        <div class="product-body">
-          <div class="p-cat">Monitors</div>
-          <div class="p-name">LG 24" FHD IPS Monitor 75Hz</div>
-          <div class="p-pricing"><span class="p-price">Rs. 42,000</span></div>
-          <div class="p-card-actions">
-            <button class="btn-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-            <a href="product.html" class="btn-view" title="View Details"><i class="fas fa-eye"></i></a>
-          </div>
-        </div>
-      </div>
+      <?php endforeach ?>
     </div>
   </div>
 </section>
+<?php endif ?>
 
 <div id="footer-slot"></div>
 <script src="components/footer.js"></script>
@@ -205,6 +223,8 @@
 <script src="assets/js/main.js"></script>
 <script>
 (function () {
+  const WA_NUMBER = '<?= $waClean ?>';
+
   function renderCart() {
     const items   = GenexCart.getItems();
     const count   = GenexCart.getCount();
@@ -213,17 +233,15 @@
     const empty   = document.getElementById('cartEmptyState');
     const tbody   = document.getElementById('cartTableBody');
     const waBtn   = document.getElementById('waOrderBtn');
-    const related = document.getElementById('relatedSection');
 
     document.getElementById('summaryItemCount').textContent = count + ' item' + (count !== 1 ? 's' : '');
     document.getElementById('summarySubtotal').textContent  = GenexCart.fmt(total);
     document.getElementById('summaryTotal').textContent     = GenexCart.fmt(total);
-    if (waBtn) waBtn.href = GenexCart.buildWaText() || '#';
+    if (waBtn) waBtn.href = GenexCart.buildWaText(WA_NUMBER) || '#';
 
     if (!items.length) {
       layout.style.display  = 'none';
       empty.style.display   = '';
-      related.style.display = '';
       return;
     }
 

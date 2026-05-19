@@ -1,3 +1,10 @@
+﻿<?php
+require_once __DIR__ . '/includes/functions.php';
+
+$phone      = getSetting('store_whatsapp', '94777237962');
+$phoneClean = preg_replace('/\D/', '', $phone);
+$email      = getSetting('email', 'genecoretech@gmail.com');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,10 +21,8 @@
 </head>
 <body>
 
-<!-- Page Loader -->
 <div class="page-loader"><div class="loader-bar"></div></div>
 
-<!-- HEADER -->
 <div id="header-slot"></div>
 <script src="assets/js/cart.js"></script>
 <script src="assets/js/wishlist.js"></script>
@@ -35,7 +40,7 @@
       <p>We respect your privacy. Learn how we collect, use and protect your personal information.</p>
     </div>
     <nav class="breadcrumb" aria-label="Breadcrumb" data-anim="up" data-delay="2">
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index.php"><i class="fas fa-home"></i> Home</a>
       <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
       <span>Privacy Policy</span>
     </nav>
@@ -186,11 +191,11 @@
             <div class="pcb-ico"><i class="fas fa-shield-alt"></i></div>
             <div class="pcb-text">
               <strong>Privacy Queries</strong>
-              <span>genecoretech@gmail.com · +94 77 723 7962</span>
+              <span><?= htmlspecialchars($email) ?> · <?= htmlspecialchars($phone) ?></span>
             </div>
             <div class="pcb-links">
-              <a href="mailto:genecoretech@gmail.com" class="btn btn-gold btn-sm"><i class="fas fa-envelope"></i> Email Us</a>
-              <a href="contact.html" class="btn btn-ghost btn-sm"><i class="fas fa-paper-plane"></i> Contact Form</a>
+              <a href="mailto:<?= htmlspecialchars($email) ?>" class="btn btn-gold btn-sm"><i class="fas fa-envelope"></i> Email Us</a>
+              <a href="contact.php" class="btn btn-ghost btn-sm"><i class="fas fa-paper-plane"></i> Contact Form</a>
             </div>
           </div>
         </div>
@@ -200,7 +205,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <div id="footer-slot"></div>
 <script src="components/footer.js"></script>
 

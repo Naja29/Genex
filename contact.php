@@ -1,3 +1,19 @@
+﻿<?php
+require_once __DIR__ . '/includes/functions.php';
+
+$phone      = getSetting('store_whatsapp', '94777237962');
+$phoneClean = preg_replace('/\D/', '', $phone);
+$phoneFmt   = '+' . substr($phoneClean, 0, 2) . ' ' . substr($phoneClean, 2, 2) . ' ' . substr($phoneClean, 4, 3) . ' ' . substr($phoneClean, 7);
+$email      = getSetting('store_email', 'genecoretech@gmail.com');
+$address    = getSetting('store_address', 'Lenabatuwa, Kamburupitiya, Sri Lanka - 81100');
+$hours      = getSetting('store_hours', 'Mon - Sat: 8:00 AM - 7:00 PM');
+$facebook   = getSetting('facebook_url', 'https://web.facebook.com/genecoretech');
+$instagram  = getSetting('instagram_url', '#');
+$youtube    = getSetting('youtube_url', '#');
+$tiktok     = getSetting('tiktok_url', '#');
+$mapEmbed   = getSetting('store_map_embed', 'https://maps.google.com/maps?q=Kamburupitiya,Sri+Lanka&output=embed');
+$mapLink    = getSetting('store_map_link', '');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +21,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Contact Genex - Get in touch for wholesale inquiries, product questions or support. Call, WhatsApp or visit us in Kamburupitiya, Sri Lanka.">
   <title>Contact Us | Genex - Global Xperience</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,10 +29,8 @@
 </head>
 <body>
 
-<!-- Page Loader -->
 <div class="page-loader"><div class="loader-bar"></div></div>
 
-<!-- HEADER -->
 <div id="header-slot"></div>
 <script src="assets/js/cart.js"></script>
 <script src="assets/js/wishlist.js"></script>
@@ -35,7 +48,7 @@
       <p>Have a question, wholesale inquiry or need help choosing the right product? We're here for you.</p>
     </div>
     <nav class="breadcrumb" aria-label="Breadcrumb" data-anim="up" data-delay="2">
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index.php"><i class="fas fa-home"></i> Home</a>
       <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
       <span>Contact Us</span>
     </nav>
@@ -51,7 +64,7 @@
         <div class="cc-ico" style="--cic:rgba(212,146,10,.12);--cicc:#d4920a"><i class="fas fa-map-marker-alt"></i></div>
         <div class="cc-body">
           <strong>Our Location</strong>
-          <span>Lenabatuwa, Kamburupitiya<br>Sri Lanka - 81100</span>
+          <span><?= nl2br(htmlspecialchars($address)) ?></span>
         </div>
       </div>
 
@@ -59,7 +72,7 @@
         <div class="cc-ico" style="--cic:rgba(37,211,102,.12);--cicc:#25d366"><i class="fab fa-whatsapp"></i></div>
         <div class="cc-body">
           <strong>WhatsApp / Call</strong>
-          <a href="https://wa.me/94777237962" target="_blank" rel="noopener">+94 77 723 7962</a>
+          <a href="https://wa.me/<?= htmlspecialchars($phoneClean) ?>" target="_blank" rel="noopener"><?= htmlspecialchars($phoneFmt) ?></a>
         </div>
       </div>
 
@@ -67,7 +80,7 @@
         <div class="cc-ico" style="--cic:rgba(59,130,246,.12);--cicc:#3b82f6"><i class="fas fa-envelope"></i></div>
         <div class="cc-body">
           <strong>Email Us</strong>
-          <a href="mailto:genecoretech@gmail.com">genecoretech@gmail.com</a>
+          <a href="mailto:<?= htmlspecialchars($email) ?>"><?= htmlspecialchars($email) ?></a>
         </div>
       </div>
 
@@ -75,7 +88,7 @@
         <div class="cc-ico" style="--cic:rgba(168,85,247,.12);--cicc:#a855f7"><i class="fas fa-clock"></i></div>
         <div class="cc-body">
           <strong>Opening Hours</strong>
-          <span>Mon - Sat: 8:00 AM - 7:00 PM<br>Sunday: Closed</span>
+          <span><?= nl2br(htmlspecialchars($hours)) ?><br>Sunday: Closed</span>
         </div>
       </div>
 
@@ -159,8 +172,8 @@
         <!-- Quick contact options -->
         <div class="cf-quick">
           <p>Prefer a faster response?</p>
-          <a href="https://wa.me/94777237962" target="_blank" rel="noopener" class="btn btn-green btn-sm"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
-          <a href="tel:+94777237962" class="btn btn-ghost btn-sm"><i class="fas fa-phone-alt"></i> Call Now</a>
+          <a href="https://wa.me/<?= htmlspecialchars($phoneClean) ?>" target="_blank" rel="noopener" class="btn btn-green btn-sm"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+          <a href="tel:+<?= htmlspecialchars($phoneClean) ?>" class="btn btn-ghost btn-sm"><i class="fas fa-phone-alt"></i> Call Now</a>
         </div>
       </div>
 
@@ -168,21 +181,41 @@
       <div class="contact-map-wrap" data-anim="right">
         <div class="contact-map">
           <iframe
-            src="https://maps.google.com/maps?q=Kamburupitiya,Sri+Lanka&output=embed"
+            src="<?= htmlspecialchars($mapEmbed) ?>"
             width="100%" height="100%" style="border:0;filter:invert(90%) hue-rotate(180deg)"
             allowfullscreen loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="Genex Store - Kamburupitiya, Sri Lanka">
+            title="Genex Store Location">
           </iframe>
         </div>
+        <?php if ($mapLink): ?>
+        <a href="<?= htmlspecialchars($mapLink) ?>" target="_blank" rel="noopener"
+           class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;margin-top:12px">
+          <i class="fas fa-directions" style="color:#4285f4"></i> Get Directions on Google Maps
+        </a>
+        <?php endif ?>
         <div class="contact-social">
           <p>Follow us on social media</p>
           <div class="socials">
-            <a href="https://web.facebook.com/genecoretech" target="_blank" rel="noopener" class="soc-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <?php if ($facebook && $facebook !== '#'): ?>
+            <a href="<?= htmlspecialchars($facebook) ?>" target="_blank" rel="noopener" class="soc-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <?php endif ?>
+            <?php if ($instagram && $instagram !== '#'): ?>
+            <a href="<?= htmlspecialchars($instagram) ?>" target="_blank" rel="noopener" class="soc-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <?php else: ?>
             <a href="#" class="soc-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://wa.me/94777237962" target="_blank" rel="noopener" class="soc-btn" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <?php endif ?>
+            <a href="https://wa.me/<?= htmlspecialchars($phoneClean) ?>" target="_blank" rel="noopener" class="soc-btn" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <?php if ($youtube && $youtube !== '#'): ?>
+            <a href="<?= htmlspecialchars($youtube) ?>" target="_blank" rel="noopener" class="soc-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <?php else: ?>
             <a href="#" class="soc-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <?php endif ?>
+            <?php if ($tiktok && $tiktok !== '#'): ?>
+            <a href="<?= htmlspecialchars($tiktok) ?>" target="_blank" rel="noopener" class="soc-btn" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <?php else: ?>
             <a href="#" class="soc-btn" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <?php endif ?>
           </div>
         </div>
       </div>
@@ -191,27 +224,23 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <div id="footer-slot"></div>
 <script src="components/footer.js"></script>
 
-<!-- Scroll to Top -->
 <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
   <i class="fas fa-chevron-up"></i>
 </button>
 
-<!-- Main Script -->
 <script src="assets/js/main.js"></script>
 <script>
-/* Contact form handler */
 document.getElementById('contactForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  const name    = document.getElementById('cf-name');
-  const email   = document.getElementById('cf-email');
-  const message = document.getElementById('cf-message');
+  const nameEl    = document.getElementById('cf-name');
+  const emailEl   = document.getElementById('cf-email');
+  const messageEl = document.getElementById('cf-message');
   let valid = true;
 
-  [name, email, message].forEach(el => {
+  [nameEl, emailEl, messageEl].forEach(el => {
     if (!el.value.trim()) {
       el.closest('.cf-input-wrap').classList.add('cf-error');
       valid = false;
@@ -219,20 +248,40 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
       el.closest('.cf-input-wrap').classList.remove('cf-error');
     }
   });
-
   if (!valid) return;
 
   const btn = this.querySelector('.cf-submit');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-  btn.disabled = true;
+  btn.disabled  = true;
 
-  setTimeout(() => {
+  fetch('api/contact.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name:    nameEl.value.trim(),
+      phone:   document.getElementById('cf-phone').value.trim(),
+      email:   emailEl.value.trim(),
+      subject: document.getElementById('cf-subject').value,
+      message: messageEl.value.trim(),
+    })
+  })
+  .then(r => r.json())
+  .then(res => {
     btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-    btn.disabled = false;
-    this.reset();
-    document.getElementById('cfSuccess').classList.add('show');
-    setTimeout(() => document.getElementById('cfSuccess').classList.remove('show'), 5000);
-  }, 1200);
+    btn.disabled  = false;
+    if (res.success) {
+      document.getElementById('contactForm').reset();
+      document.getElementById('cfSuccess').classList.add('show');
+      setTimeout(() => document.getElementById('cfSuccess').classList.remove('show'), 6000);
+    } else {
+      alert(res.error || 'Failed to send. Please try again.');
+    }
+  })
+  .catch(() => {
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+    btn.disabled  = false;
+    alert('Network error. Please try again.');
+  });
 });
 
 document.querySelectorAll('.cf-input-wrap input, .cf-input-wrap textarea').forEach(el => {

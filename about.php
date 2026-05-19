@@ -1,11 +1,23 @@
+﻿<?php
+require_once __DIR__ . '/includes/functions.php';
+$db = getDB();
+
+$productCount = (int)$db->query('SELECT COUNT(*) FROM products WHERE is_active = 1')->fetchColumn();
+
+$phone    = getSetting('store_whatsapp', '94777237962');
+$phoneClean = preg_replace('/\D/', '', $phone);
+$phoneFmt = '+' . substr($phoneClean, 0, 2) . ' ' . substr($phoneClean, 2, 2) . ' ' . substr($phoneClean, 4, 3) . ' ' . substr($phoneClean, 7);
+$email    = getSetting('store_email', 'genecoretech@gmail.com');
+$address  = getSetting('store_address', 'Lenabatuwa, Kamburupitiya, Matara District, Sri Lanka - 81100');
+$hours    = getSetting('store_hours', 'Monday - Saturday: 8:00 AM - 7:00 PM');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="About Genex - Your trusted source for premium computer parts, electronics and accessories in Sri Lanka. Wholesale & Retail from Kamburupitiya.">
+  <meta name="description" content="About Genex - Your trusted source for premium computer parts, electronics and accessories in Sri Lanka. Wholesale &amp; Retail from Kamburupitiya.">
   <title>About Us | Genex - Global Xperience</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,10 +26,8 @@
 </head>
 <body>
 
-<!-- Page Loader -->
 <div class="page-loader"><div class="loader-bar"></div></div>
 
-<!-- HEADER -->
 <div id="header-slot"></div>
 <script src="assets/js/cart.js"></script>
 <script src="assets/js/wishlist.js"></script>
@@ -35,7 +45,7 @@
       <p>Sri Lanka's trusted source for premium computer parts, electronics &amp; accessories. Wholesale &amp; Retail with the best service.</p>
     </div>
     <nav class="breadcrumb" aria-label="Breadcrumb" data-anim="up" data-delay="2">
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index.php"><i class="fas fa-home"></i> Home</a>
       <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
       <span>About Us</span>
     </nav>
@@ -47,7 +57,7 @@
   <div class="stats-grid">
     <div class="stat-item" data-anim="up" data-delay="1">
       <div class="stat-ico"><i class="fas fa-box-open"></i></div>
-      <div><div class="stat-num" data-count="500">0</div><div class="stat-label">Products Available</div></div>
+      <div><div class="stat-num" data-count="<?= $productCount ?>"><?= $productCount ?></div><div class="stat-label">Products Available</div></div>
     </div>
     <div class="stat-item" data-anim="up" data-delay="2">
       <div class="stat-ico"><i class="fas fa-users"></i></div>
@@ -111,8 +121,8 @@
         </div>
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px">
-          <a href="shop.html" class="btn btn-gold"><i class="fas fa-shopping-bag"></i> Shop Now</a>
-          <a href="contact.html" class="btn btn-ghost"><i class="fas fa-envelope"></i> Contact Us</a>
+          <a href="shop.php" class="btn btn-gold"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+          <a href="contact.php" class="btn btn-ghost"><i class="fas fa-envelope"></i> Contact Us</a>
         </div>
       </div>
 
@@ -168,33 +178,33 @@
           <div class="vd-ico"><i class="fas fa-map-marker-alt"></i></div>
           <div>
             <strong>Address</strong>
-            <span>Lenabatuwa, Kamburupitiya<br>Matara District, Sri Lanka - 81100</span>
+            <span><?= nl2br(htmlspecialchars($address)) ?></span>
           </div>
         </div>
         <div class="visit-detail">
           <div class="vd-ico"><i class="fas fa-clock"></i></div>
           <div>
             <strong>Opening Hours</strong>
-            <span>Monday - Saturday: 8:00 AM - 7:00 PM<br>Sunday: Closed</span>
+            <span><?= nl2br(htmlspecialchars($hours)) ?><br>Sunday: Closed</span>
           </div>
         </div>
         <div class="visit-detail">
           <div class="vd-ico"><i class="fas fa-phone-alt"></i></div>
           <div>
             <strong>Phone / WhatsApp</strong>
-            <a href="tel:+94777237962">+94 77 723 7962</a>
+            <a href="tel:+<?= htmlspecialchars($phoneClean) ?>"><?= htmlspecialchars($phoneFmt) ?></a>
           </div>
         </div>
         <div class="visit-detail">
           <div class="vd-ico"><i class="fas fa-envelope"></i></div>
           <div>
             <strong>Email</strong>
-            <a href="mailto:genecoretech@gmail.com">genecoretech@gmail.com</a>
+            <a href="mailto:<?= htmlspecialchars($email) ?>"><?= htmlspecialchars($email) ?></a>
           </div>
         </div>
         <div class="visit-btns">
-          <a href="https://wa.me/94777237962" target="_blank" rel="noopener" class="btn btn-green"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
-          <a href="contact.html" class="btn btn-ghost"><i class="fas fa-paper-plane"></i> Send Message</a>
+          <a href="https://wa.me/<?= htmlspecialchars($phoneClean) ?>" target="_blank" rel="noopener" class="btn btn-green"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+          <a href="contact.php" class="btn btn-ghost"><i class="fas fa-paper-plane"></i> Send Message</a>
         </div>
       </div>
 
@@ -212,16 +222,13 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <div id="footer-slot"></div>
 <script src="components/footer.js"></script>
 
-<!-- Scroll to Top -->
 <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
   <i class="fas fa-chevron-up"></i>
 </button>
 
-<!-- Main Script -->
 <script src="assets/js/main.js"></script>
 </body>
 </html>

@@ -1,3 +1,11 @@
+﻿<?php
+require_once __DIR__ . '/includes/functions.php';
+
+$phone      = getSetting('store_whatsapp', '94777237962');
+$phoneClean = preg_replace('/\D/', '', $phone);
+$waAccount  = 'https://wa.me/' . $phoneClean . '?text=' . rawurlencode('Hi Genex, I need help with my account.');
+$waOrder    = 'https://wa.me/' . $phoneClean;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +31,7 @@
 <div style="background:var(--bg-2);border-bottom:1px solid var(--border);padding:12px 0">
   <div class="container">
     <nav class="breadcrumb">
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index.php"><i class="fas fa-home"></i> Home</a>
       <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
       <span id="bcLabel">My Account</span>
     </nav>
@@ -76,7 +84,7 @@
               <button type="submit" class="btn btn-primary cf-submit"><i class="fas fa-sign-in-alt"></i> Sign In</button>
             </form>
             <div class="auth-divider" style="margin-top:20px">or</div>
-            <a href="https://wa.me/94777237962?text=Hi%20Genex%2C%20I%20need%20help%20with%20my%20account." target="_blank" class="btn btn-green" style="width:100%;justify-content:center;margin-top:4px">
+            <a href="<?= htmlspecialchars($waAccount) ?>" target="_blank" class="btn btn-green" style="width:100%;justify-content:center;margin-top:4px">
               <i class="fab fa-whatsapp"></i> Continue with WhatsApp
             </a>
             <p class="auth-footer" style="margin-top:16px">
@@ -162,7 +170,8 @@
               <i class="fas fa-box"></i> My Orders
             </div>
             <div class="acc-nav-item" data-panel="wishlist">
-              <i class="fas fa-heart"></i> Wishlist <span id="navWishCount" style="margin-left:auto;background:rgba(239,68,68,.15);color:#f87171;border-radius:20px;font-size:11px;padding:1px 8px"></span>
+              <i class="fas fa-heart"></i> Wishlist
+              <span id="navWishCount" style="margin-left:auto;background:rgba(239,68,68,.15);color:#f87171;border-radius:20px;font-size:11px;padding:1px 8px"></span>
             </div>
             <div class="acc-nav-item" data-panel="security">
               <i class="fas fa-shield-alt"></i> Security
@@ -200,19 +209,17 @@
             </div>
 
             <div class="acc-card">
-              <div class="acc-card-header">
-                <h3>Quick Actions</h3>
-              </div>
+              <div class="acc-card-header"><h3>Quick Actions</h3></div>
               <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-                <a href="shop.html" class="acc-stat" style="text-decoration:none;transition:var(--t);cursor:pointer">
+                <a href="shop.php" class="acc-stat" style="text-decoration:none;transition:var(--t);cursor:pointer">
                   <span style="font-size:28px;color:var(--primary);display:block;margin-bottom:8px"><i class="fas fa-store"></i></span>
                   <span class="acc-stat-label">Browse Shop</span>
                 </a>
-                <a href="wishlist.html" class="acc-stat" style="text-decoration:none;transition:var(--t);cursor:pointer">
+                <a href="wishlist.php" class="acc-stat" style="text-decoration:none;transition:var(--t);cursor:pointer">
                   <span style="font-size:28px;color:#ef4444;display:block;margin-bottom:8px"><i class="fas fa-heart"></i></span>
                   <span class="acc-stat-label">My Wishlist</span>
                 </a>
-                <a href="cart.html" class="acc-stat" style="text-decoration:none;transition:var(--t);cursor:pointer">
+                <a href="cart.php" class="acc-stat" style="text-decoration:none;transition:var(--t);cursor:pointer">
                   <span style="font-size:28px;color:var(--primary);display:block;margin-bottom:8px"><i class="fas fa-shopping-cart"></i></span>
                   <span class="acc-stat-label">View Cart</span>
                 </a>
@@ -223,9 +230,7 @@
           <!-- Edit Profile -->
           <div class="acc-panel" id="panel-profile">
             <div class="acc-card">
-              <div class="acc-card-header">
-                <h3>Edit Profile</h3>
-              </div>
+              <div class="acc-card-header"><h3>Edit Profile</h3></div>
               <form class="auth-form" id="editProfileForm">
                 <div class="cf-row">
                   <div class="cf-group">
@@ -260,16 +265,14 @@
           <!-- Orders -->
           <div class="acc-panel" id="panel-orders">
             <div class="acc-card">
-              <div class="acc-card-header">
-                <h3>My Orders</h3>
-              </div>
+              <div class="acc-card-header"><h3>My Orders</h3></div>
               <div class="acc-orders-empty">
                 <i class="fas fa-box-open"></i>
                 <h4 style="font-size:16px;font-weight:700;color:var(--text-2)">No orders yet</h4>
                 <p>Orders placed via WhatsApp or inquiry form will be tracked here once confirmed by our team.</p>
                 <div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;justify-content:center">
-                  <a href="shop.html" class="btn btn-primary"><i class="fas fa-store"></i> Start Shopping</a>
-                  <a href="https://wa.me/94777237962" target="_blank" class="btn btn-green"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                  <a href="shop.php" class="btn btn-primary"><i class="fas fa-store"></i> Start Shopping</a>
+                  <a href="<?= htmlspecialchars($waOrder) ?>" target="_blank" class="btn btn-green"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
                 </div>
               </div>
             </div>
@@ -280,13 +283,13 @@
             <div class="acc-card">
               <div class="acc-card-header">
                 <h3>My Wishlist</h3>
-                <a href="wishlist.html" class="btn btn-ghost" style="padding:7px 16px;font-size:13px"><i class="fas fa-external-link-alt"></i> View Full</a>
+                <a href="wishlist.php" class="btn btn-ghost" style="padding:7px 16px;font-size:13px"><i class="fas fa-external-link-alt"></i> View Full</a>
               </div>
               <div id="accWishGrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px"></div>
               <div id="accWishEmpty" class="acc-orders-empty" style="display:none">
                 <i class="far fa-heart"></i>
                 <p>No items saved to wishlist yet.</p>
-                <a href="shop.html" class="btn btn-primary" style="margin-top:4px"><i class="fas fa-store"></i> Browse Products</a>
+                <a href="shop.php" class="btn btn-primary" style="margin-top:4px"><i class="fas fa-store"></i> Browse Products</a>
               </div>
             </div>
           </div>
@@ -330,11 +333,11 @@
 (function () {
   const UKEY = 'genex_user';
 
-  function loadUser()    { try { return JSON.parse(localStorage.getItem(UKEY)); } catch { return null; } }
-  function saveUser(u)   { localStorage.setItem(UKEY, JSON.stringify(u)); }
-  function clearUser()   { localStorage.removeItem(UKEY); }
-  function initials(u)   { return ((u.firstName||'?')[0] + (u.lastName||'?')[0]).toUpperCase(); }
-  function fullName(u)   { return (u.firstName + ' ' + u.lastName).trim(); }
+  function loadUser()  { try { return JSON.parse(localStorage.getItem(UKEY)); } catch { return null; } }
+  function saveUser(u) { localStorage.setItem(UKEY, JSON.stringify(u)); }
+  function clearUser() { localStorage.removeItem(UKEY); }
+  function initials(u) { return ((u.firstName||'?')[0] + (u.lastName||'?')[0]).toUpperCase(); }
+  function fullName(u) { return (u.firstName + ' ' + u.lastName).trim(); }
 
   // Auth tabs
   document.querySelectorAll('.auth-tab').forEach(tab => {
@@ -399,30 +402,28 @@
   function showProfile(user) {
     document.getElementById('authView').style.display    = 'none';
     document.getElementById('profileView').style.display = '';
-    document.getElementById('accAvatar').textContent   = initials(user);
-    document.getElementById('accName').textContent     = fullName(user);
-    document.getElementById('accEmail').textContent    = user.email;
+    document.getElementById('accAvatar').textContent    = initials(user);
+    document.getElementById('accName').textContent      = fullName(user);
+    document.getElementById('accEmail').textContent     = user.email;
     document.getElementById('overviewName').textContent = user.firstName;
-    document.getElementById('accSince').textContent    = 'Member since ' + new Date(user.joined || Date.now()).getFullYear();
-    document.getElementById('heroTitle').innerHTML     = 'Welcome, <em>' + user.firstName + '</em>';
-    document.getElementById('heroSub').textContent     = 'Manage your profile, wishlist and orders.';
-    // Pre-fill edit form
+    document.getElementById('accSince').textContent     = 'Member since ' + new Date(user.joined || Date.now()).getFullYear();
+    document.getElementById('heroTitle').innerHTML      = 'Welcome, <em>' + user.firstName + '</em>';
+    document.getElementById('heroSub').textContent      = 'Manage your profile, wishlist and orders.';
     document.getElementById('editFirst').value   = user.firstName || '';
     document.getElementById('editLast').value    = user.lastName  || '';
     document.getElementById('editEmail').value   = user.email     || '';
     document.getElementById('editPhone').value   = user.phone     || '';
     document.getElementById('editAddress').value = user.address   || '';
-    // Stats
-    document.getElementById('statWish').textContent    = GenexWishlist.getCount();
-    document.getElementById('statCart').textContent    = GenexCart.getCount();
+    document.getElementById('statWish').textContent     = GenexWishlist.getCount();
+    document.getElementById('statCart').textContent     = GenexCart.getCount();
     document.getElementById('navWishCount').textContent = GenexWishlist.getCount() || '';
     renderAccWishlist();
   }
 
   function renderAccWishlist() {
-    const items  = GenexWishlist.getItems();
-    const grid   = document.getElementById('accWishGrid');
-    const empty  = document.getElementById('accWishEmpty');
+    const items = GenexWishlist.getItems();
+    const grid  = document.getElementById('accWishGrid');
+    const empty = document.getElementById('accWishEmpty');
     if (!items.length) { grid.style.display = 'none'; empty.style.display = ''; return; }
     grid.style.display  = '';
     empty.style.display = 'none';
@@ -434,8 +435,10 @@
           <div style="font-size:13px;font-weight:800;color:var(--primary);margin-top:2px">${GenexWishlist.fmt(item.price)}</div>
         </div>
       </div>`).join('');
-    if (items.length > 6) grid.insertAdjacentHTML('beforeend',
-      `<a href="wishlist.html" style="grid-column:span 2;text-align:center;font-size:13px;color:var(--primary);font-weight:600;padding:10px">View all ${items.length} items →</a>`);
+    if (items.length > 6) {
+      grid.insertAdjacentHTML('beforeend',
+        `<a href="wishlist.php" style="grid-column:span 2;text-align:center;font-size:13px;color:var(--primary);font-weight:600;padding:10px">View all ${items.length} items →</a>`);
+    }
   }
 
   // Nav panels
@@ -453,14 +456,14 @@
     e.preventDefault();
     const user = loadUser();
     if (!user) return;
-    user.firstName = document.getElementById('editFirst').value.trim();
-    user.lastName  = document.getElementById('editLast').value.trim();
-    user.email     = document.getElementById('editEmail').value.trim();
-    user.phone     = document.getElementById('editPhone').value.trim();
-    user.address   = document.getElementById('editAddress').value.trim();
-    // Update in users list too
+    const oldEmail   = user.email;
+    user.firstName   = document.getElementById('editFirst').value.trim();
+    user.lastName    = document.getElementById('editLast').value.trim();
+    user.email       = document.getElementById('editEmail').value.trim();
+    user.phone       = document.getElementById('editPhone').value.trim();
+    user.address     = document.getElementById('editAddress').value.trim();
     const users = JSON.parse(localStorage.getItem('genex_users') || '[]');
-    const idx   = users.findIndex(u => u.email === loadUser().email);
+    const idx   = users.findIndex(u => u.email === oldEmail);
     if (idx > -1) users[idx] = user;
     localStorage.setItem('genex_users', JSON.stringify(users));
     saveUser(user);
@@ -479,9 +482,9 @@
     const err  = document.getElementById('passError');
     const msg  = document.getElementById('passErrMsg');
 
-    if (cur !== user.password)  { msg.textContent = 'Current password is incorrect.'; err.classList.add('show'); return; }
-    if (nw.length < 6)          { msg.textContent = 'New password must be at least 6 characters.'; err.classList.add('show'); return; }
-    if (nw !== conf)            { msg.textContent = 'Passwords do not match.'; err.classList.add('show'); return; }
+    if (cur !== user.password) { msg.textContent = 'Current password is incorrect.';        err.classList.add('show'); return; }
+    if (nw.length < 6)         { msg.textContent = 'New password must be at least 6 characters.'; err.classList.add('show'); return; }
+    if (nw !== conf)           { msg.textContent = 'Passwords do not match.';               err.classList.add('show'); return; }
 
     err.classList.remove('show');
     user.password = nw;

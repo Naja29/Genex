@@ -1,3 +1,10 @@
+﻿<?php
+require_once __DIR__ . '/includes/functions.php';
+
+$phone      = getSetting('store_whatsapp', '94777237962');
+$phoneClean = preg_replace('/\D/', '', $phone);
+$email      = getSetting('email', 'genecoretech@gmail.com');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,10 +21,8 @@
 </head>
 <body>
 
-<!-- Page Loader -->
 <div class="page-loader"><div class="loader-bar"></div></div>
 
-<!-- HEADER -->
 <div id="header-slot"></div>
 <script src="assets/js/cart.js"></script>
 <script src="assets/js/wishlist.js"></script>
@@ -35,7 +40,7 @@
       <p>We want you to be completely satisfied. Here's everything you need to know about returns and refunds at Genex.</p>
     </div>
     <nav class="breadcrumb" aria-label="Breadcrumb" data-anim="up" data-delay="2">
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index.php"><i class="fas fa-home"></i> Home</a>
       <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
       <span>Return Policy</span>
     </nav>
@@ -118,7 +123,7 @@
           <h2><span class="ps-num">04</span> How to Return a Product</h2>
           <p>Follow these steps to initiate a return:</p>
           <ol>
-            <li><strong>Contact us first</strong> - reach us on WhatsApp (+94 77 723 7962) or email (genecoretech@gmail.com) within 7 days of receiving your item. Do not send the item back without prior approval.</li>
+            <li><strong>Contact us first</strong> - reach us on WhatsApp (<?= htmlspecialchars($phone) ?>) or email (<?= htmlspecialchars($email) ?>) within 7 days of receiving your item. Do not send the item back without prior approval.</li>
             <li><strong>Provide details</strong> - share your order number/invoice, the reason for return, and photos or a video of the issue if applicable.</li>
             <li><strong>Await approval</strong> - our team will review your request and confirm eligibility within 24 hours.</li>
             <li><strong>Return the item</strong> - once approved, securely pack the item in its original packaging and send it to our address. We recommend using a trackable courier.</li>
@@ -130,7 +135,7 @@
             <strong>Genex - Global Xperience</strong><br>
             Lenabatuwa, Kamburupitiya<br>
             Matara District, Sri Lanka - 81100<br>
-            Phone: +94 77 723 7962
+            Phone: <?= htmlspecialchars($phone) ?>
           </p>
           <p style="margin-top:12px"><strong>Note:</strong> Return shipping costs are the customer's responsibility unless the return is due to a defect or error on our part, in which case we will cover the return courier charge.</p>
         </div>
@@ -175,8 +180,8 @@
               <span>Available Mon–Sat, 8:00 AM – 7:00 PM</span>
             </div>
             <div class="pcb-links">
-              <a href="https://wa.me/94777237962" target="_blank" rel="noopener" class="btn btn-gold btn-sm"><i class="fab fa-whatsapp"></i> Chat Now</a>
-              <a href="contact.html" class="btn btn-ghost btn-sm"><i class="fas fa-envelope"></i> Email Us</a>
+              <a href="https://wa.me/<?= htmlspecialchars($phoneClean) ?>" target="_blank" rel="noopener" class="btn btn-gold btn-sm"><i class="fab fa-whatsapp"></i> Chat Now</a>
+              <a href="contact.php" class="btn btn-ghost btn-sm"><i class="fas fa-envelope"></i> Email Us</a>
             </div>
           </div>
         </div>
@@ -186,18 +191,15 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <div id="footer-slot"></div>
 <script src="components/footer.js"></script>
 
-<!-- Scroll to Top -->
 <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
   <i class="fas fa-chevron-up"></i>
 </button>
 
 <script src="assets/js/main.js"></script>
 <script>
-/* TOC active on scroll */
 const sections = document.querySelectorAll('.policy-section[id]');
 const tocLinks = document.querySelectorAll('.policy-toc a');
 window.addEventListener('scroll', () => {

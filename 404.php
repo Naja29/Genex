@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/includes/functions.php';
+header("HTTP/1.0 404 Not Found");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,7 +164,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <div id="header-slot"></div>
 <script src="assets/js/cart.js"></script>
 <script src="assets/js/wishlist.js"></script>
@@ -181,8 +184,8 @@
   </p>
 
   <div class="error-actions">
-    <a href="index.html" class="btn btn-gold"><i class="fas fa-home"></i> Go Home</a>
-    <a href="shop.html" class="btn btn-ghost"><i class="fas fa-shopping-bag"></i> Browse Shop</a>
+    <a href="index.php" class="btn btn-gold"><i class="fas fa-home"></i> Go Home</a>
+    <a href="shop.php" class="btn btn-ghost"><i class="fas fa-shopping-bag"></i> Browse Shop</a>
   </div>
 
   <div class="error-search">
@@ -193,16 +196,15 @@
 
   <p class="error-links-label">Or jump to a page</p>
   <nav class="error-quick-links">
-    <a href="shop.html"><i class="fas fa-store"></i> Shop</a>
-    <a href="wholesale.html"><i class="fas fa-boxes"></i> Wholesale</a>
-    <a href="brands.html"><i class="fas fa-certificate"></i> Brands</a>
-    <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
-    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-    <a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a>
+    <a href="shop.php"><i class="fas fa-store"></i> Shop</a>
+    <a href="wholesale.php"><i class="fas fa-boxes"></i> Wholesale</a>
+    <a href="brands.php"><i class="fas fa-certificate"></i> Brands</a>
+    <a href="about.php"><i class="fas fa-info-circle"></i> About Us</a>
+    <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="faq.php"><i class="fas fa-question-circle"></i> FAQ</a>
   </nav>
 </main>
 
-<!-- FOOTER -->
 <div id="footer-slot"></div>
 <script src="components/footer.js"></script>
 
@@ -214,7 +216,7 @@
 <script>
 function doErrSearch() {
   const q = document.getElementById('errSearch').value.trim();
-  if (q) window.location.href = 'shop.html?q=' + encodeURIComponent(q);
+  if (q) window.location.href = 'shop.php?q=' + encodeURIComponent(q);
 }
 document.getElementById('errSearch').addEventListener('keydown', e => { if (e.key === 'Enter') doErrSearch(); });
 document.getElementById('errSearchBtn').addEventListener('click', doErrSearch);

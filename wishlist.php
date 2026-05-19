@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/includes/functions.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +26,7 @@
 <div style="background:var(--bg-2);border-bottom:1px solid var(--border);padding:12px 0">
   <div class="container">
     <nav class="breadcrumb">
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index.php"><i class="fas fa-home"></i> Home</a>
       <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
       <span>Wishlist</span>
     </nav>
@@ -65,7 +68,7 @@
         <i class="far fa-heart"></i>
         <h3>Your wishlist is empty</h3>
         <p>Save items you love and come back to them anytime.</p>
-        <a href="shop.html" class="btn btn-primary" style="margin-top:8px"><i class="fas fa-store"></i> Browse Products</a>
+        <a href="shop.php" class="btn btn-primary" style="margin-top:8px"><i class="fas fa-store"></i> Browse Products</a>
       </div>
     </div>
 

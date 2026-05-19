@@ -1,0 +1,23 @@
+Options -Indexes
+
+# Custom 404 page
+ErrorDocument 404 /genex/404.php
+
+# Rewrite rules
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /genex/
+
+  # Redirect old .html pages to .php (301 permanent)
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^([a-zA-Z0-9_-]+)\.html$ $1.php [R=301,L]
+
+  # Block direct access to sensitive files/folders
+  RewriteRule ^includes/ - [F,L]
+  RewriteRule ^config\.php$ - [F,L]
+</IfModule>
+
+# Block config.php (Apache 2.4 syntax)
+<Files "config.php">
+  Require all denied
+</Files>

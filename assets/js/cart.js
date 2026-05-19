@@ -70,14 +70,15 @@
 
     fmt(n) { return 'Rs. ' + n.toLocaleString(); },
 
-    buildWaText() {
+    buildWaText(number) {
       const items = this.getItems();
       if (!items.length) return '';
+      const waNum = number || window.GENEX_WA || '94777237962';
       let msg = 'Hello Genex, I would like to order:\n\n';
       items.forEach(i => { msg += `• ${i.name}  x${i.qty}  -  ${this.fmt(i.price * i.qty)}\n`; });
       msg += `\nTotal: ${this.fmt(this.getTotal())}`;
       msg += '\n\nPlease confirm availability and delivery details. Thank you!';
-      return 'https://wa.me/94777237962?text=' + encodeURIComponent(msg);
+      return 'https://wa.me/' + waNum + '?text=' + encodeURIComponent(msg);
     }
   };
 

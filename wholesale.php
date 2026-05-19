@@ -1,3 +1,26 @@
+﻿<?php
+require_once __DIR__ . '/includes/functions.php';
+$db = getDB();
+
+$phone      = getSetting('store_whatsapp', '94777237962');
+$phoneClean = preg_replace('/\D/', '', $phone);
+$phoneFmt   = '+' . substr($phoneClean, 0, 2) . ' ' . substr($phoneClean, 2, 2) . ' ' . substr($phoneClean, 4, 3) . ' ' . substr($phoneClean, 7);
+$email      = getSetting('store_email', 'genecoretech@gmail.com');
+$address    = getSetting('store_address', 'Lenabatuwa, Kamburupitiya, Sri Lanka');
+$hours      = getSetting('store_hours', 'Mon - Sat: 8:00 AM - 7:00 PM');
+
+$productCount = (int)$db->query('SELECT COUNT(*) FROM products WHERE is_active = 1')->fetchColumn();
+$brandCount   = (int)$db->query("SELECT COUNT(DISTINCT brand) FROM products WHERE brand != '' AND brand IS NOT NULL AND is_active = 1")->fetchColumn();
+
+$categories = $db->query('
+    SELECT name, icon, slug
+    FROM categories
+    WHERE is_active = 1
+    ORDER BY sort_order ASC, name ASC
+')->fetchAll();
+
+$waInquiryLink = 'https://wa.me/' . $phoneClean . '?text=' . rawurlencode("Hello Genex, I'm interested in wholesale pricing.");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +28,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Genex Wholesale - Bulk pricing on computers, electronics and accessories for dealers, retailers and businesses across Sri Lanka. Request a quote today.">
   <title>Wholesale | Genex - Global Xperience</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,10 +36,8 @@
 </head>
 <body>
 
-<!-- Page Loader -->
 <div class="page-loader"><div class="loader-bar"></div></div>
 
-<!-- HEADER -->
 <div id="header-slot"></div>
 <script src="assets/js/cart.js"></script>
 <script src="assets/js/wishlist.js"></script>
@@ -35,7 +55,7 @@
       <p>Best wholesale prices on computers, electronics and accessories. Genuine products with manufacturer warranty. Fast island-wide delivery for bulk orders.</p>
     </div>
     <nav class="breadcrumb" aria-label="Breadcrumb" data-anim="up" data-delay="2">
-      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index.php"><i class="fas fa-home"></i> Home</a>
       <span class="bc-sep"><i class="fas fa-chevron-right"></i></span>
       <span>Wholesale</span>
     </nav>
@@ -47,11 +67,11 @@
   <div class="container">
     <div class="stats-grid">
       <div class="stat-item">
-        <span class="stat-num">500<span class="stat-plus">+</span></span>
+        <span class="stat-num"><?= $productCount ?><span class="stat-plus">+</span></span>
         <span class="stat-label">Products Available</span>
       </div>
       <div class="stat-item">
-        <span class="stat-num">15<span class="stat-plus">+</span></span>
+        <span class="stat-num"><?= $brandCount ?><span class="stat-plus">+</span></span>
         <span class="stat-label">Trusted Brands</span>
       </div>
       <div class="stat-item">
@@ -76,7 +96,6 @@
     </div>
 
     <div class="ws-benefits-grid">
-
       <div class="ws-benefit-card" data-anim="up" data-delay="1">
         <div class="ws-bico"><i class="fas fa-tags"></i></div>
         <div class="ws-btxt">
@@ -84,7 +103,6 @@
           <p>Competitive bulk pricing that gives you maximum margin. The more you order, the better the price.</p>
         </div>
       </div>
-
       <div class="ws-benefit-card" data-anim="up" data-delay="2">
         <div class="ws-bico"><i class="fas fa-shield-alt"></i></div>
         <div class="ws-btxt">
@@ -92,7 +110,6 @@
           <p>Every product comes with full manufacturer warranty. No counterfeits, no grey market - guaranteed authentic.</p>
         </div>
       </div>
-
       <div class="ws-benefit-card" data-anim="up" data-delay="3">
         <div class="ws-bico"><i class="fas fa-truck"></i></div>
         <div class="ws-btxt">
@@ -100,7 +117,6 @@
           <p>Reliable delivery to all parts of Sri Lanka. Bulk orders dispatched within 24–48 hours of confirmation.</p>
         </div>
       </div>
-
       <div class="ws-benefit-card" data-anim="up" data-delay="1">
         <div class="ws-bico"><i class="fas fa-headset"></i></div>
         <div class="ws-btxt">
@@ -108,7 +124,6 @@
           <p>A dedicated account manager for wholesale clients. Quick responses via WhatsApp, call or email.</p>
         </div>
       </div>
-
       <div class="ws-benefit-card" data-anim="up" data-delay="2">
         <div class="ws-bico"><i class="fas fa-boxes"></i></div>
         <div class="ws-btxt">
@@ -116,7 +131,6 @@
           <p>No unreasonable minimum orders. Whether you need 5 units or 500, we have the right pricing for you.</p>
         </div>
       </div>
-
       <div class="ws-benefit-card" data-anim="up" data-delay="3">
         <div class="ws-bico"><i class="fas fa-sync-alt"></i></div>
         <div class="ws-btxt">
@@ -124,7 +138,6 @@
           <p>Stay ahead with timely notifications about new arrivals, restocks and limited-time wholesale deals.</p>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -137,45 +150,27 @@
       <h2 class="section-title">How It <em>Works</em></h2>
       <p class="section-sub">Getting wholesale pricing from Genex is quick and straightforward.</p>
     </div>
-
     <div class="ws-steps">
-
       <div class="ws-step" data-anim="up" data-delay="1">
-        <div class="ws-step-num">
-          <i class="fas fa-paper-plane"></i>
-          <span class="ws-step-count">1</span>
-        </div>
+        <div class="ws-step-num"><i class="fas fa-paper-plane"></i><span class="ws-step-count">1</span></div>
         <h4>Send Inquiry</h4>
         <p>Fill our wholesale inquiry form or contact us directly via WhatsApp or phone with your requirements.</p>
       </div>
-
       <div class="ws-step" data-anim="up" data-delay="2">
-        <div class="ws-step-num">
-          <i class="fas fa-file-invoice-dollar"></i>
-          <span class="ws-step-count">2</span>
-        </div>
+        <div class="ws-step-num"><i class="fas fa-file-invoice-dollar"></i><span class="ws-step-count">2</span></div>
         <h4>Receive Quote</h4>
         <p>We'll review your order and send you a detailed price quote within 24 hours based on your quantity.</p>
       </div>
-
       <div class="ws-step" data-anim="up" data-delay="3">
-        <div class="ws-step-num">
-          <i class="fas fa-handshake"></i>
-          <span class="ws-step-count">3</span>
-        </div>
+        <div class="ws-step-num"><i class="fas fa-handshake"></i><span class="ws-step-count">3</span></div>
         <h4>Confirm Order</h4>
         <p>Agree on pricing and terms, make payment and confirm your bulk order with our team.</p>
       </div>
-
       <div class="ws-step" data-anim="up" data-delay="4">
-        <div class="ws-step-num">
-          <i class="fas fa-shipping-fast"></i>
-          <span class="ws-step-count">4</span>
-        </div>
+        <div class="ws-step-num"><i class="fas fa-shipping-fast"></i><span class="ws-step-count">4</span></div>
         <h4>Fast Delivery</h4>
         <p>Your order is packed and dispatched island-wide within 24-48 hours, or pick up from our store.</p>
       </div>
-
     </div>
   </div>
 </section>
@@ -188,60 +183,33 @@
       <h2 class="section-title">Categories <em>Available</em></h2>
       <p class="section-sub">Wholesale pricing available across all our product categories.</p>
     </div>
-
     <div class="ws-cats-grid">
-      <div class="ws-cat-card" data-anim="up" data-delay="1">
-        <div class="ws-cat-ico"><i class="fas fa-microchip"></i></div>
-        <span>Processors</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="2">
-        <div class="ws-cat-ico"><i class="fas fa-server"></i></div>
-        <span>Motherboards</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="3">
-        <div class="ws-cat-ico"><i class="fas fa-memory"></i></div>
-        <span>RAM</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="4">
-        <div class="ws-cat-ico"><i class="fas fa-hdd"></i></div>
-        <span>Storage - SSD &amp; HDD</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="1">
-        <div class="ws-cat-ico"><i class="fas fa-desktop"></i></div>
-        <span>Graphics Cards</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="2">
-        <div class="ws-cat-ico"><i class="fas fa-tv"></i></div>
-        <span>Monitors</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="3">
-        <div class="ws-cat-ico"><i class="fas fa-keyboard"></i></div>
-        <span>Keyboards</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="4">
-        <div class="ws-cat-ico"><i class="fas fa-mouse"></i></div>
-        <span>Mouse</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="1">
-        <div class="ws-cat-ico"><i class="fas fa-plug"></i></div>
-        <span>Cables &amp; Accessories</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="2">
-        <div class="ws-cat-ico"><i class="fas fa-battery-full"></i></div>
-        <span>Power Banks</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="3">
-        <div class="ws-cat-ico"><i class="fas fa-charging-station"></i></div>
-        <span>Chargers</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="4">
-        <div class="ws-cat-ico"><i class="fas fa-headphones"></i></div>
-        <span>Earphones &amp; Audio</span>
-      </div>
-      <div class="ws-cat-card" data-anim="up" data-delay="1">
-        <div class="ws-cat-ico"><i class="fas fa-mobile-alt"></i></div>
-        <span>Mobile Displays</span>
-      </div>
+      <?php if ($categories): ?>
+        <?php foreach ($categories as $i => $cat): ?>
+        <a href="shop.php?cat=<?= htmlspecialchars($cat['slug']) ?>" class="ws-cat-card" data-anim="up" data-delay="<?= ($i % 4) + 1 ?>">
+          <div class="ws-cat-ico"><i class="<?= htmlspecialchars($cat['icon'] ?? 'fas fa-box') ?>"></i></div>
+          <span><?= htmlspecialchars($cat['name']) ?></span>
+        </a>
+        <?php endforeach ?>
+      <?php else: ?>
+        <?php
+        $fallbackCats = [
+          ['fas fa-microchip','Processors'],['fas fa-server','Motherboards'],
+          ['fas fa-memory','RAM'],['fas fa-hdd','Storage - SSD &amp; HDD'],
+          ['fas fa-desktop','Graphics Cards'],['fas fa-tv','Monitors'],
+          ['fas fa-keyboard','Keyboards'],['fas fa-mouse','Mouse'],
+          ['fas fa-plug','Cables &amp; Accessories'],['fas fa-battery-full','Power Banks'],
+          ['fas fa-charging-station','Chargers'],['fas fa-headphones','Earphones &amp; Audio'],
+          ['fas fa-mobile-alt','Mobile Displays'],
+        ];
+        foreach ($fallbackCats as $i => [$ico, $label]):
+        ?>
+        <a href="shop.php" class="ws-cat-card" data-anim="up" data-delay="<?= ($i % 4) + 1 ?>">
+          <div class="ws-cat-ico"><i class="<?= $ico ?>"></i></div>
+          <span><?= $label ?></span>
+        </a>
+        <?php endforeach ?>
+      <?php endif ?>
     </div>
   </div>
 </section>
@@ -257,7 +225,6 @@
 
     <div class="ws-tiers-grid">
 
-      <!-- STARTER -->
       <div class="ws-tier-card" data-anim="up" data-delay="1">
         <span class="ws-tier-badge starter"><i class="fas fa-star"></i> Starter</span>
         <div class="ws-tier-name">Starter</div>
@@ -277,7 +244,6 @@
         </div>
       </div>
 
-      <!-- BUSINESS (FEATURED) -->
       <div class="ws-tier-card featured" data-anim="up" data-delay="2">
         <span class="ws-tier-badge recommended"><i class="fas fa-fire"></i> Most Popular</span>
         <div class="ws-tier-name">Business</div>
@@ -297,7 +263,6 @@
         </div>
       </div>
 
-      <!-- ENTERPRISE -->
       <div class="ws-tier-card" data-anim="up" data-delay="3">
         <span class="ws-tier-badge enterprise"><i class="fas fa-crown"></i> Enterprise</span>
         <div class="ws-tier-name">Enterprise</div>
@@ -322,7 +287,6 @@
     <p style="text-align:center;font-size:13px;color:var(--text-dim);margin-top:28px">
       <i class="fas fa-info-circle"></i>&nbsp; Prices are indicative. Actual wholesale rates depend on product category and quantity. Contact us for an exact quote.
     </p>
-
   </div>
 </section>
 
@@ -386,19 +350,9 @@
                 <i class="fas fa-th-large"></i>
                 <select id="wsCategory">
                   <option value="">Select a category</option>
-                  <option>Processors</option>
-                  <option>Motherboards</option>
-                  <option>RAM</option>
-                  <option>Storage - SSD &amp; HDD</option>
-                  <option>Graphics Cards</option>
-                  <option>Monitors</option>
-                  <option>Keyboards</option>
-                  <option>Mouse</option>
-                  <option>Cables &amp; Accessories</option>
-                  <option>Power Banks</option>
-                  <option>Chargers</option>
-                  <option>Earphones &amp; Audio</option>
-                  <option>Mobile Displays</option>
+                  <?php foreach ($categories as $cat): ?>
+                  <option><?= htmlspecialchars($cat['name']) ?></option>
+                  <?php endforeach ?>
                   <option>Mixed / Multiple Categories</option>
                 </select>
               </div>
@@ -441,7 +395,7 @@
       <!-- Sidebar -->
       <div class="ws-contact-sidebar" data-anim="right">
 
-        <a href="https://wa.me/94777237962?text=Hello%20Genex%2C%20I'm%20interested%20in%20wholesale%20pricing." target="_blank" rel="noopener" class="ws-wa-btn-full">
+        <a href="<?= htmlspecialchars($waInquiryLink) ?>" target="_blank" rel="noopener" class="ws-wa-btn-full">
           <i class="fab fa-whatsapp"></i> Quick Quote on WhatsApp
         </a>
 
@@ -449,23 +403,23 @@
           <h4>Contact Details</h4>
           <div class="ws-cs-item">
             <i class="fas fa-phone-alt"></i>
-            <div><a href="tel:+94777237962">+94 77 723 7962</a></div>
+            <div><a href="tel:+<?= htmlspecialchars($phoneClean) ?>"><?= htmlspecialchars($phoneFmt) ?></a></div>
           </div>
           <div class="ws-cs-item">
             <i class="fab fa-whatsapp"></i>
-            <div><a href="https://wa.me/94777237962" target="_blank">+94 77 723 7962</a></div>
+            <div><a href="https://wa.me/<?= htmlspecialchars($phoneClean) ?>" target="_blank"><?= htmlspecialchars($phoneFmt) ?></a></div>
           </div>
           <div class="ws-cs-item">
             <i class="fas fa-envelope"></i>
-            <div><a href="mailto:genecoretech@gmail.com">genecoretech@gmail.com</a></div>
+            <div><a href="mailto:<?= htmlspecialchars($email) ?>"><?= htmlspecialchars($email) ?></a></div>
           </div>
           <div class="ws-cs-item">
             <i class="fas fa-map-marker-alt"></i>
-            <div><span>Lenabatuwa, Kamburupitiya, Sri Lanka</span></div>
+            <div><span><?= htmlspecialchars($address) ?></span></div>
           </div>
           <div class="ws-cs-item">
             <i class="fas fa-clock"></i>
-            <div><span>Mon - Sat: 8:00 AM - 7:00 PM</span></div>
+            <div><span><?= htmlspecialchars($hours) ?></span></div>
           </div>
         </div>
 
@@ -501,7 +455,6 @@
     </div>
 
     <div class="ws-faq" data-anim="up">
-
       <div class="ws-faq-item">
         <button class="ws-faq-q" type="button">
           What is the minimum order for wholesale?
@@ -511,7 +464,6 @@
           <p>Our minimum wholesale order starts at Rs. 25,000. However, we are flexible - contact us directly and we'll try to accommodate smaller orders depending on the product and availability.</p>
         </div>
       </div>
-
       <div class="ws-faq-item">
         <button class="ws-faq-q" type="button">
           Are all products genuine with warranty?
@@ -521,7 +473,6 @@
           <p>Yes. Every product we sell - retail or wholesale - is 100% genuine with full manufacturer warranty. We do not deal in counterfeit, grey market or unlicensed products.</p>
         </div>
       </div>
-
       <div class="ws-faq-item">
         <button class="ws-faq-q" type="button">
           How long does wholesale delivery take?
@@ -531,7 +482,6 @@
           <p>For in-stock items, orders are packed and dispatched within 24-48 hours after payment confirmation. Delivery to most areas in Sri Lanka takes 1–3 working days depending on the courier.</p>
         </div>
       </div>
-
       <div class="ws-faq-item">
         <button class="ws-faq-q" type="button">
           What payment methods do you accept for wholesale?
@@ -541,7 +491,6 @@
           <p>We accept bank transfers, cash on delivery (for selected areas) and cash on pickup. For large enterprise orders, we can discuss credit terms. Contact us for details.</p>
         </div>
       </div>
-
       <div class="ws-faq-item">
         <button class="ws-faq-q" type="button">
           Can I pick up my order directly from the store?
@@ -551,7 +500,6 @@
           <p>Yes! You are welcome to collect your order from our store in Kamburupitiya. Please confirm your order in advance so we can have everything ready for you. Store hours: Mon–Sat, 8:00 AM – 7:00 PM.</p>
         </div>
       </div>
-
       <div class="ws-faq-item">
         <button class="ws-faq-q" type="button">
           Do you offer return or exchange on wholesale orders?
@@ -561,7 +509,6 @@
           <p>We accept returns for defective or incorrect items within 7 days of delivery. Products must be in original packaging and unused. Warranty claims are handled directly with the manufacturer for manufacturing defects.</p>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -576,48 +523,38 @@
         <p style="color:var(--text-muted);font-size:14px;max-width:480px">Contact us now to get the best wholesale pricing on computer parts and electronics across Sri Lanka.</p>
       </div>
       <div class="brands-cta-btns">
-        <a href="https://wa.me/94777237962?text=Hello%20Genex%2C%20I'm%20interested%20in%20wholesale%20pricing." target="_blank" rel="noopener" class="btn btn-green"><i class="fab fa-whatsapp"></i> WhatsApp for Quote</a>
+        <a href="<?= htmlspecialchars($waInquiryLink) ?>" target="_blank" rel="noopener" class="btn btn-green"><i class="fab fa-whatsapp"></i> WhatsApp for Quote</a>
         <a href="#ws-inquiry" class="btn btn-primary"><i class="fas fa-file-alt"></i> Submit Inquiry</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <div id="footer-slot"></div>
 <script src="components/footer.js"></script>
 
-<!-- Scroll to Top -->
 <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
   <i class="fas fa-chevron-up"></i>
 </button>
 
-<!-- Main Script -->
 <script src="assets/js/main.js"></script>
 <script>
-/* FAQ accordion */
 document.querySelectorAll('.ws-faq-q').forEach(btn => {
   btn.addEventListener('click', () => {
-    const item = btn.closest('.ws-faq-item');
+    const item   = btn.closest('.ws-faq-item');
     const isOpen = item.classList.contains('open');
     document.querySelectorAll('.ws-faq-item').forEach(i => i.classList.remove('open'));
     if (!isOpen) item.classList.add('open');
   });
 });
 
-/* Inquiry form */
 document.getElementById('wsForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  const name     = document.getElementById('wsName');
-  const business = document.getElementById('wsBusiness');
-  const phone    = document.getElementById('wsPhone');
-  const category = document.getElementById('wsCategory');
-  const qty      = document.getElementById('wsQty');
-  const message  = document.getElementById('wsMessage');
-  const btn      = document.getElementById('wsSubmitBtn');
+  const fields = ['wsName','wsBusiness','wsPhone','wsCategory','wsQty','wsMessage'];
   let valid = true;
 
-  [name, business, phone, category, qty, message].forEach(el => {
+  fields.forEach(id => {
+    const el = document.getElementById(id);
     el.closest('.cf-input-wrap').classList.remove('cf-error');
     if (!el.value.trim()) {
       el.closest('.cf-input-wrap').classList.add('cf-error');
@@ -627,6 +564,7 @@ document.getElementById('wsForm').addEventListener('submit', function(e) {
 
   if (!valid) return;
 
+  const btn = document.getElementById('wsSubmitBtn');
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
   btn.disabled = true;
 
